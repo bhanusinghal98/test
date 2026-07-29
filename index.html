@@ -1,1001 +1,941 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Kirti's Birthday Fairytale | A Disney-Style Story by Bhanu ❤️</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kirti's Birthday Fairytale ✨</title>
+  <style>
+    :root {
+      --bg-primary: #fff5f7;
+      --bg-secondary: #ffe6eb;
+      --card-bg: rgba(255, 255, 255, 0.9);
+      --text-main: #4a2c35;
+      --accent-pink: #ff4d6d;
+      --accent-gold: #ffb703;
+      --accent-rose: #c9184a;
+      --shadow: 0 10px 30px rgba(255, 77, 109, 0.15);
+      --font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+
+    [data-theme="dark"] {
+      --bg-primary: #1a0918;
+      --bg-secondary: #2b0e25;
+      --card-bg: rgba(43, 14, 37, 0.85);
+      --text-main: #ffd8e4;
+      --accent-pink: #ff758f;
+      --accent-gold: #ffb703;
+      --accent-rose: #ff4d6d;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     
-    <!-- PREMIUM TYPOGRAPHY -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Playfair+Display:ital,wght@0,600;0,800;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;600;700&family=Sacramento&display=swap" rel="stylesheet">
+    body {
+      font-family: var(--font-family);
+      background: linear-gradient(135deg, var(--bg-primary), var(--bg-secondary));
+      color: var(--text-main);
+      min-height: 100vh;
+      overflow-x: hidden;
+      transition: background 0.5s, color 0.5s;
+    }
 
-    <style>
-        /* ==========================================================================
-           1. CORE SYSTEM & LUXURY DESIGN TOKENS
-           ========================================================================== */
-        :root {
-            --gold-primary: #d4af37;
-            --gold-light: #f3e5ab;
-            --gold-glow: rgba(212, 175, 55, 0.5);
-            --rose-300: #ffb3c1;
-            --rose-500: #ff4d6d;
-            --rose-600: #c1121f;
-            --rose-deep: #590d22;
-            --glass-bg: rgba(255, 255, 255, 0.12);
-            --glass-border: rgba(255, 255, 255, 0.28);
-            --glass-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
-            --text-dark: #2b0938;
-            --text-light: #fff0f5;
-            --bg-night: #0b0214;
-        }
+    /* Ambient Canvas */
+    #ambient-canvas {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; -webkit-tap-highlight-color: transparent; }
+    /* Navigation & Header */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+      background: rgba(255, 255, 255, 0.25);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 12px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    }
 
-        html, body {
-            width: 100%; height: 100%;
-            overflow: hidden;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background: var(--bg-night);
-            color: var(--text-light);
-            transition: background 1.5s ease;
-        }
+    .brand {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--accent-rose);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
 
-        /* --- AURORA ANIMATED BACKGROUND MESH --- */
-        .aurora-bg {
-            position: fixed; inset: 0; z-index: 0;
-            background: 
-                radial-gradient(circle at 15% 20%, #ff758f 0%, transparent 45%),
-                radial-gradient(circle at 85% 80%, #7b2cbf 0%, transparent 50%),
-                radial-gradient(circle at 50% 50%, #3a0ca3 0%, transparent 55%),
-                radial-gradient(circle at 80% 15%, #ffb3c1 0%, transparent 40%);
-            filter: blur(60px); opacity: 0.75;
-            animation: auroraShift 20s ease-in-out infinite alternate;
-            transition: opacity 1.5s ease;
-        }
+    .controls-group {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
 
-        @keyframes auroraShift {
-            0% { transform: scale(1) rotate(0deg); }
-            50% { transform: scale(1.18) rotate(6deg); }
-            100% { transform: scale(1.05) rotate(-6deg); }
-        }
+    /* Audio Player System */
+    .audio-player-widget {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--card-bg);
+      padding: 6px 14px;
+      border-radius: 30px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--accent-pink);
+    }
 
-        body.dark-emotional-mode .aurora-bg {
-            opacity: 0.15;
-        }
+    .audio-btn {
+      background: var(--accent-pink);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      transition: transform 0.2s, background 0.2s;
+    }
 
-        /* --- CANVAS LAYERS --- */
-        canvas { position: fixed; inset: 0; pointer-events: none; }
-        #canvas-night { z-index: 1; }
-        #canvas-particles { z-index: 2; }
-        #canvas-fireworks { z-index: 3; }
+    .audio-btn:hover { transform: scale(1.1); background: var(--accent-rose); }
 
-        /* ==========================================================================
-           2. GLASSMORPHISM & LAYOUT ARCHITECTURE
-           ========================================================================== */
-        .page {
-            position: absolute; inset: 0; z-index: 10;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            padding: 24px; text-align: center;
-            opacity: 0; pointer-events: none;
-            transform: scale(0.92) translateY(20px);
-            filter: blur(8px);
-            transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1);
-            overflow-y: auto;
-        }
+    .song-select {
+      background: transparent;
+      border: none;
+      color: var(--text-main);
+      font-size: 0.85rem;
+      font-weight: 600;
+      outline: none;
+      cursor: pointer;
+      max-width: 130px;
+    }
 
-        .page.active {
-            opacity: 1; pointer-events: auto;
-            transform: scale(1) translateY(0);
-            filter: blur(0px);
-        }
+    .equalizer-bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 3px;
+      height: 16px;
+      width: 20px;
+    }
 
-        .glass-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(25px) saturate(190%);
-            -webkit-backdrop-filter: blur(25px) saturate(190%);
-            border: 1px solid var(--glass-border);
-            box-shadow: var(--glass-shadow);
-            border-radius: 36px;
-            padding: 36px; max-width: 720px; width: 100%;
-            position: relative; overflow: hidden;
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
-        }
+    .eq-bar {
+      width: 3px;
+      background: var(--accent-pink);
+      border-radius: 2px;
+      height: 4px;
+      transition: height 0.2s;
+    }
 
-        .glass-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 30px 70px rgba(0,0,0,0.4), 0 0 35px var(--gold-glow);
-        }
+    .eq-bar.playing {
+      animation: eqPulse 0.6s infinite alternate ease-in-out;
+    }
+    .eq-bar:nth-child(1) { animation-delay: 0.1s; }
+    .eq-bar:nth-child(2) { animation-delay: 0.3s; }
+    .eq-bar:nth-child(3) { animation-delay: 0.2s; }
 
-        /* --- TYPOGRAPHY --- */
-        .font-title { 
-            font-family: 'Playfair Display', serif; font-weight: 800; 
-            background: linear-gradient(135deg, #ffffff 0%, #ffb3c1 50%, var(--gold-primary) 100%); 
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent; 
-            letter-spacing: -0.5px;
-        }
-        .font-cursive { 
-            font-family: 'Sacramento', cursive; font-size: 3.8rem; color: #ffe6ea; 
-            text-shadow: 0 0 25px rgba(255,117,143,0.7); 
-            line-height: 1.1;
-        }
-        .font-serif { font-family: 'Cinzel', serif; letter-spacing: 2px; }
+    @keyframes eqPulse {
+      0% { height: 4px; }
+      100% { height: 16px; }
+    }
 
-        h1 { font-size: 2.8rem; margin-bottom: 14px; line-height: 1.2; }
-        h2 { font-size: 2rem; margin-bottom: 16px; font-weight: 600; }
-        p { font-size: 1.15rem; line-height: 1.7; opacity: 0.95; font-weight: 300; }
+    .theme-toggle {
+      background: var(--card-bg);
+      border: 1px solid var(--accent-pink);
+      border-radius: 20px;
+      padding: 6px 12px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
 
-        /* --- LUXURY BUTTONS --- */
-        .btn-glass {
-            background: linear-gradient(135deg, rgba(255, 77, 109, 0.85), rgba(193, 18, 31, 0.95));
-            color: #fff; border: 1px solid rgba(255,255,255,0.45);
-            padding: 16px 36px; font-size: 1.1rem; font-weight: 600;
-            border-radius: 50px; cursor: pointer;
-            box-shadow: 0 12px 30px rgba(255, 77, 109, 0.45), inset 0 1px 0 rgba(255,255,255,0.5);
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            position: relative; overflow: hidden; margin-top: 24px;
-            display: inline-flex; align-items: center; justify-content: center; gap: 10px;
-        }
+    /* Container Layout */
+    main {
+      position: relative;
+      z-index: 2;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px;
+    }
 
-        .btn-glass:hover {
-            transform: translateY(-4px) scale(1.05);
-            box-shadow: 0 20px 40px rgba(255, 77, 109, 0.65), 0 0 25px var(--gold-glow);
-        }
+    /* Chapter Section Container */
+    .chapter-section {
+      background: var(--card-bg);
+      border-radius: 24px;
+      padding: 30px;
+      margin-bottom: 40px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      transition: transform 0.3s ease;
+    }
 
-        .btn-glass:active { transform: translateY(1px) scale(0.98); }
+    h2.chapter-title {
+      font-size: 1.8rem;
+      color: var(--accent-rose);
+      margin-bottom: 20px;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
 
-        .btn-secondary {
-            background: rgba(255, 255, 255, 0.15);
-            border: 1px solid var(--glass-border);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-        }
+    /* =========================================================
+       CORRECTED ENVELOPE UI & 3D UNBOXING ENGINE
+       ========================================================= */
+    .envelope-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 10px;
+    }
 
-        /* ==========================================================================
-           3. HUD TOOLBAR & AUDIO CONTROL
-           ========================================================================== */
-        .hud-toolbar {
-            position: fixed; top: 20px; right: 20px; z-index: 100;
-            display: flex; align-items: center; gap: 10px;
-            background: rgba(15, 5, 29, 0.65); backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.25); border-radius: 40px; padding: 6px 14px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
+    .envelope-hint {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--accent-rose);
+      margin-bottom: 25px;
+      animation: bouncePrompt 2s infinite;
+      text-align: center;
+    }
 
-        .hud-btn {
-            background: none; border: none; color: white; font-size: 1.2rem;
-            cursor: pointer; width: 38px; height: 38px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            transition: background 0.2s, transform 0.2s;
-        }
+    @keyframes bouncePrompt {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
 
-        .hud-btn:hover { background: rgba(255,255,255,0.2); transform: scale(1.1); }
+    .envelope-wrapper {
+      position: relative;
+      width: 320px;
+      height: 220px;
+      perspective: 1200px;
+      cursor: pointer;
+      margin-top: 50px;
+    }
 
-        select.hud-select {
-            background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.3);
-            color: white; padding: 6px 12px; border-radius: 20px; font-size: 0.85rem; outline: none;
-            cursor: pointer;
-        }
+    .envelope-body {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: #f7aef8;
+      background: linear-gradient(135deg, #ff758f, #ff4d6d);
+      border-radius: 0 0 16px 16px;
+      box-shadow: 0 15px 35px rgba(255, 77, 109, 0.3);
+      position: relative;
+    }
 
-        select.hud-select option { background: #1a0826; color: white; }
+    /* Front Pocket of Envelope */
+    .envelope-pocket {
+      position: absolute;
+      top: 0; left: 0; width: 0; height: 0;
+      border-left: 160px solid #ff5d7a;
+      border-right: 160px solid #ff5d7a;
+      border-bottom: 120px solid #ff4162;
+      border-top: 100px solid transparent;
+      border-radius: 0 0 16px 16px;
+      z-index: 4;
+      pointer-events: none;
+    }
 
-        .signature-tag {
-            position: fixed; bottom: 20px; left: 20px; z-index: 100;
-            font-family: 'Sacramento', cursive; font-size: 1.8rem; color: var(--gold-primary);
-            text-shadow: 0 0 10px rgba(212, 175, 55, 0.5); pointer-events: none;
-        }
+    /* 3D Top Flap */
+    .envelope-flap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 120px;
+      background: #ff4d6d;
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+      transform-origin: top center;
+      transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), z-index 0.8s;
+      z-index: 5;
+    }
 
-        /* ==========================================================================
-           4. CHAPTER COMPONENT SPECIFIC STYLES
-           ========================================================================== */
-        /* --- CH 1: ENVELOPE --- */
-        .envelope-wrapper {
-            perspective: 1000px; width: 320px; height: 220px; cursor: pointer; margin: 25px auto;
-        }
-        .envelope-3d { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.8s; }
-        .env-face { position: absolute; inset: 0; border-radius: 16px; box-shadow: 0 15px 35px rgba(0,0,0,0.4); }
-        .env-back { background: #ff758f; }
-        .env-flap {
-            position: absolute; top: 0; left: 0; right: 0; height: 115px;
-            background: #ff4d6d; clip-path: polygon(0 0, 100% 0, 50% 100%);
-            transform-origin: top; transition: transform 0.8s ease-in-out; z-index: 5;
-        }
-        .env-seal {
-            position: absolute; top: 82px; left: 50%; transform: translateX(-50%);
-            width: 56px; height: 56px; background: radial-gradient(circle, #800f2f, #4a0e17);
-            border: 2px solid var(--gold-primary); border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-family: 'Cinzel', serif; font-weight: bold; color: var(--gold-primary);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5); z-index: 6; transition: all 0.4s;
-        }
-        .env-letter {
-            position: absolute; inset: 12px; background: #fff8f0; color: #4a0e17;
-            border-radius: 12px; padding: 20px; text-align: center;
-            transform: translateY(0); transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            z-index: 3; box-shadow: 0 -5px 15px rgba(0,0,0,0.1);
-        }
+    /* Wax Seal */
+    .wax-seal {
+      position: absolute;
+      top: 90px;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 58px;
+      height: 58px;
+      background: radial-gradient(circle at 30% 30%, #ffbe0b, #d48b00);
+      border-radius: 50%;
+      border: 3px solid #fff;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+      z-index: 6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      color: #fff;
+      transition: transform 0.3s, opacity 0.5s;
+    }
 
-        /* --- CH 2: GARDEN --- */
-        .garden-bed {
-            display: flex; flex-wrap: wrap; justify-content: center; gap: 14px;
-            margin: 20px 0; max-height: 240px; overflow-y: auto; padding: 12px;
-            background: rgba(0,0,0,0.15); border-radius: 24px; border: 1px solid rgba(255,255,255,0.1);
-        }
-        .flower-node {
-            font-size: 2.8rem; cursor: pointer; transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            filter: drop-shadow(0 5px 12px rgba(0,0,0,0.3));
-            animation: flowerSway 3s ease-in-out infinite alternate;
-        }
-        .flower-node:hover { transform: scale(1.45) rotate(12deg); }
-        @keyframes flowerSway { 0% { transform: rotate(-4deg); } 100% { transform: rotate(4deg); } }
+    .wax-seal:hover {
+      transform: translate(-50%, -50%) scale(1.15);
+    }
 
-        /* --- CH 3: TEDDY ANIMATION --- */
-        .teddy-stage {
-            position: relative; width: 100%; height: 160px; margin: 20px 0;
-            background: rgba(0,0,0,0.2); border-radius: 24px; overflow: hidden;
-            border-bottom: 3px solid var(--gold-primary);
-        }
-        .teddy-actor {
-            font-size: 4rem; position: absolute; bottom: 10px; left: -80px;
-            transition: left 0.1s linear, transform 0.3s;
-        }
+    /* Invitation Letter Inside */
+    .envelope-letter {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      right: 15px;
+      height: 190px;
+      background: #fffdf9;
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      z-index: 3;
+      transition: transform 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: 2px dashed #ffb703;
+    }
 
-        /* --- CH 4: STUBBORNNESS SCANNER --- */
-        .scanner-container {
-            width: 100%; height: 28px; background: rgba(0,0,0,0.4); border: 2px solid var(--gold-primary);
-            border-radius: 20px; padding: 3px; margin: 20px 0; overflow: hidden;
-        }
-        .scanner-fill {
-            width: 0%; height: 100%; background: linear-gradient(90deg, #ff4d6d, var(--gold-primary));
-            border-radius: 15px; transition: width 3.5s cubic-bezier(0.1, 0, 0.2, 1);
-        }
+    .letter-title {
+      font-family: 'Georgia', serif;
+      font-size: 1.2rem;
+      color: var(--accent-rose);
+      font-weight: bold;
+    }
 
-        /* --- CH 5: TED TALK STAGE --- */
-        .stage-curtain-l, .stage-curtain-r {
-            position: absolute; top: 0; bottom: 0; width: 50%; background: #590d22;
-            z-index: 15; transition: transform 1.8s cubic-bezier(0.77, 0, 0.175, 1);
-            border-bottom: 8px solid var(--gold-primary);
-        }
-        .stage-curtain-l { left: 0; transform-origin: left; }
-        .stage-curtain-r { right: 0; transform-origin: right; }
-        .spotlight-beam {
-            position: absolute; top: -100px; left: 50%; transform: translateX(-50%);
-            width: 350px; height: 600px;
-            background: radial-gradient(ellipse at top, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0) 70%);
-            opacity: 0; transition: opacity 1.5s; pointer-events: none; z-index: 12;
-        }
+    .letter-text {
+      font-size: 0.9rem;
+      color: #555;
+      line-height: 1.4;
+    }
 
-        /* --- CH 9: FLIP CARDS --- */
-        .cards-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 14px;
-            margin: 20px 0; max-height: 280px; overflow-y: auto; padding: 6px;
-        }
-        .flip-card {
-            height: 100px; perspective: 1000px; cursor: pointer;
-        }
-        .flip-card-inner {
-            position: relative; width: 100%; height: 100%; text-align: center;
-            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            transform-style: preserve-3d;
-        }
-        .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
-        .card-front, .card-back {
-            position: absolute; width: 100%; height: 100%; backface-visibility: hidden;
-            border-radius: 20px; display: flex; align-items: center; justify-content: center;
-            padding: 10px; font-weight: 600; box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-            border: 1px solid var(--glass-border);
-        }
-        .card-front { background: rgba(255,255,255,0.18); font-size: 2rem; }
-        .card-back { background: linear-gradient(135deg, #ff4d6d, #800f2f); color: white; transform: rotateY(180deg); font-size: 0.95rem; }
+    .letter-btn {
+      background: var(--accent-pink);
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .letter-btn:hover { background: var(--accent-rose); }
 
-        /* --- CH 10: MINI GAMES --- */
-        .game-stage {
-            position: relative; width: 100%; height: 220px; background: rgba(0,0,0,0.25);
-            border-radius: 24px; border: 1px solid var(--glass-border); overflow: hidden; margin: 15px 0;
-        }
-        .game-heart-target {
-            position: absolute; font-size: 2.5rem; cursor: pointer;
-            transition: transform 0.2s, top 0.4s, left 0.4s;
-            filter: drop-shadow(0 4px 10px rgba(255,77,109,0.5));
-        }
+    /* Open State Classes */
+    .envelope-wrapper.opened .wax-seal {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(1.8);
+      pointer-events: none;
+    }
 
-        /* --- CH 11: SVG 3D CAKE --- */
-        .cake-wrapper {
-            width: 210px; height: 210px; margin: 15px auto; cursor: pointer;
-            filter: drop-shadow(0 15px 30px rgba(0,0,0,0.5));
-            transition: transform 0.3s;
-        }
-        .cake-wrapper:hover { transform: scale(1.08); }
-        .flame {
-            animation: flameFlicker 0.5s infinite alternate ease-in-out;
-            transform-origin: center bottom;
-        }
-        @keyframes flameFlicker {
-            0% { transform: scale(1) rotate(-3deg); opacity: 1; }
-            100% { transform: scale(1.2) rotate(4deg); opacity: 0.85; }
-        }
+    .envelope-wrapper.opened .envelope-flap {
+      transform: rotateX(180deg);
+      z-index: 1;
+    }
 
-        /* --- CH 13: SECRET LETTERS --- */
-        .letters-grid { display: flex; gap: 14px; justify-content: center; margin: 20px 0; flex-wrap: wrap; }
-        .secret-env {
-            width: 90px; height: 65px; background: var(--rose-500); border-radius: 12px;
-            display: flex; align-items: center; justify-content: center; font-size: 1.8rem;
-            cursor: pointer; border: 1px solid var(--gold-primary); box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-            transition: transform 0.3s;
-        }
-        .secret-env:hover { transform: translateY(-50px) scale(1.1); }
+    .envelope-wrapper.opened .envelope-letter {
+      transform: translateY(-130px) scale(1.05);
+      z-index: 10;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    }
 
-        /* --- RUNAWAY NO BUTTON GAME --- */
-        .runaway-box {
-            display: flex; flex-direction: column; gap: 12px; align-items: center; margin-top: 15px;
-            position: relative; min-height: 180px; width: 100%;
-        }
-        #btn-no-runaway {
-            position: absolute; background: rgba(108, 117, 125, 0.85);
-            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
+    /* Chapter 1: Story Timeline */
+    .timeline {
+      position: relative;
+      margin: 20px 0;
+      padding-left: 20px;
+      border-left: 3px solid var(--accent-pink);
+    }
 
-        /* --- FLOATING TOASTS --- */
-        .floating-toast {
-            position: fixed; z-index: 150; background: rgba(255, 255, 255, 0.95); color: var(--rose-deep);
-            padding: 12px 26px; border-radius: 30px; font-family: 'Sacramento', cursive; font-size: 2.2rem;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.3); border: 1px solid var(--gold-primary);
-            pointer-events: none; animation: floatToastUp 4.5s ease-out forwards;
-        }
-        @keyframes floatToastUp {
-            0% { opacity: 0; transform: translateY(30px) scale(0.8); }
-            15% { opacity: 1; transform: translateY(0) scale(1); }
-            80% { opacity: 1; }
-            100% { opacity: 0; transform: translateY(-120px) scale(0.9); }
-        }
-    </style>
+    .timeline-event {
+      position: relative;
+      margin-bottom: 25px;
+      padding-left: 20px;
+    }
+
+    .timeline-event::before {
+      content: '🌸';
+      position: absolute;
+      left: -33px;
+      top: 0;
+      background: var(--card-bg);
+      border-radius: 50%;
+      padding: 2px;
+    }
+
+    .timeline-date {
+      font-size: 0.85rem;
+      font-weight: bold;
+      color: var(--accent-pink);
+    }
+
+    /* Mini-Game Catcher */
+    #game-container {
+      width: 100%;
+      height: 300px;
+      background: linear-gradient(to bottom, var(--bg-secondary), var(--card-bg));
+      border-radius: 16px;
+      position: relative;
+      overflow: hidden;
+      border: 2px solid var(--accent-pink);
+      cursor: crosshair;
+    }
+
+    .game-score-board {
+      position: absolute;
+      top: 10px;
+      left: 15px;
+      font-weight: bold;
+      color: var(--accent-rose);
+      z-index: 10;
+    }
+
+    .falling-item {
+      position: absolute;
+      font-size: 1.8rem;
+      user-select: none;
+      cursor: pointer;
+      animation: fallDown linear forwards;
+    }
+
+    @keyframes fallDown {
+      0% { top: -40px; }
+      100% { top: 320px; }
+    }
+
+    /* Birthday Cake & Candle Interaction */
+    .cake-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 30px 0;
+    }
+
+    .cake {
+      width: 200px;
+      height: 120px;
+      background: #f4acb7;
+      border-radius: 20px 20px 10px 10px;
+      position: relative;
+      box-shadow: inset 0 -15px 0 #9d8189, 0 10px 20px rgba(0,0,0,0.1);
+      display: flex;
+      justify-content: center;
+    }
+
+    .cake::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 35px;
+      background: #ffcad4;
+      border-radius: 20px 20px 10px 10px;
+    }
+
+    .candles {
+      position: absolute;
+      top: -30px;
+      display: flex;
+      gap: 25px;
+    }
+
+    .candle {
+      width: 12px;
+      height: 35px;
+      background: repeating-linear-gradient(45deg, #ffb703, #ffb703 5px, #fff 5px, #fff 10px);
+      border-radius: 4px;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .flame {
+      position: absolute;
+      top: -15px; left: 50%;
+      transform: translateX(-50%);
+      width: 12px; height: 16px;
+      background: #ff9e00;
+      border-radius: 50% 50% 20% 20%;
+      box-shadow: 0 0 10px #ff9e00;
+      animation: flicker 0.4s infinite alternate;
+      cursor: pointer;
+    }
+
+    .flame.extinguished {
+      display: none;
+    }
+
+    @keyframes flicker {
+      0% { transform: translateX(-50%) scale(1); }
+      100% { transform: translateX(-50%) scale(1.2); }
+    }
+
+    /* Wish Jar */
+    .wish-input-group {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .wish-input {
+      flex: 1;
+      padding: 12px 18px;
+      border-radius: 25px;
+      border: 1px solid var(--accent-pink);
+      outline: none;
+      background: var(--bg-primary);
+      color: var(--text-main);
+    }
+
+    .wish-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .wish-chip {
+      background: var(--bg-secondary);
+      border: 1px solid var(--accent-pink);
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      animation: popIn 0.3s ease;
+    }
+
+    @keyframes popIn {
+      0% { transform: scale(0.8); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    /* Fireworks Canvas */
+    #fireworks-canvas {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 99;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      header { flex-direction: column; gap: 12px; }
+      .envelope-wrapper { width: 280px; height: 200px; }
+      .envelope-pocket { border-left-width: 140px; border-right-width: 140px; }
+    }
+  </style>
 </head>
 <body>
 
-    <!-- AURORA MESH BACKGROUND -->
-    <div class="aurora-bg" id="aurora-bg"></div>
+  <!-- Background Effect Canvas -->
+  <canvas id="ambient-canvas"></canvas>
+  <canvas id="fireworks-canvas"></canvas>
 
-    <!-- CANVAS LAYERS -->
-    <canvas id="canvas-night"></canvas>
-    <canvas id="canvas-particles"></canvas>
-    <canvas id="canvas-fireworks"></canvas>
-
-    <!-- FLOATING HUD TOOLBAR -->
-    <div class="hud-toolbar">
-        <button class="hud-btn" id="btn-audio-toggle" onclick="AudioEngine.toggleMute()" title="Toggle Audio">🎵</button>
-        <select class="hud-select" id="music-select" onchange="AudioEngine.switchTrack(this.value)">
-            <option value="piano">🎹 Soft Piano</option>
-            <option value="violin">🎻 Romantic Violin</option>
-            <option value="rain">🌧️ Rain Ambience</option>
-            <option value="birds">🕊️ Garden Birds</option>
-            <option value="bday">🎂 Birthday Synth</option>
+  <!-- Top Header Navigation -->
+  <header>
+    <div class="brand">👑 Kirti's Fairytale</div>
+    
+    <div class="controls-group">
+      <!-- Music Player System -->
+      <div class="audio-player-widget">
+        <button class="audio-btn" id="play-pause-btn" title="Toggle Music">▶</button>
+        <select class="song-select" id="song-selector">
+          <option value="piano">🎹 Piano Love Serenade</option>
+          <option value="birthday">🎂 Fairytale Birthday</option>
+          <option value="acoustic">🎸 Acoustic Romance</option>
+          <option value="lofi">🌸 Sunset Lofi Beats</option>
         </select>
-        <button class="hud-btn" onclick="spawnLoveToast()" title="Send Love Note">💌</button>
+        <div class="equalizer-bars" id="eq-visualizer">
+          <div class="eq-bar"></div>
+          <div class="eq-bar"></div>
+          <div class="eq-bar"></div>
+        </div>
+      </div>
+
+      <!-- Theme Switcher -->
+      <button class="theme-toggle" id="theme-btn">🌙 Midnight</button>
     </div>
+  </header>
 
-    <!-- SIGNATURE -->
-    <div class="signature-tag">Made with ❤️ by Bhanu</div>
-
-    <!-- ==========================================================================
-       CHAPTER PAGES (1 - 15)
-       ========================================================================== -->
-
-    <!-- PAGE 1: LUXURY OPENING ENVELOPE -->
-    <div class="page active" id="page-1">
-        <div class="glass-card">
-            <h1 class="font-cursive">Kirti's Fairytale</h1>
-            <p class="font-serif" style="color: var(--gold-primary); margin-bottom: 10px;">An Interactive Story Created Just For You</p>
-            <div class="envelope-wrapper" onclick="openEnvelope()">
-                <div class="envelope-3d" id="env-3d">
-                    <div class="env-face env-back"></div>
-                    <div class="env-flap" id="env-flap"></div>
-                    <div class="env-seal" id="env-seal">K</div>
-                    <div class="env-letter" id="env-letter">
-                        <h2 class="font-cursive" style="color: #590d22;">For Kirti ❤️</h2>
-                        <p style="font-size: 0.9rem; color: #800f2f;">Tap wax seal to unseal...</p>
-                    </div>
-                </div>
+  <main>
+    <!-- CHAPTER 0: ENVELOPE UNBOXING -->
+    <section class="chapter-section" id="chapter-envelope">
+      <div class="envelope-container">
+        <div class="envelope-hint" id="envelope-prompt">✨ Touch the Wax Seal or Envelope to Reveal Kirti's Fairytale ✨</div>
+        
+        <div class="envelope-wrapper" id="envelope-wrapper" onclick="openEnvelope()">
+          <div class="envelope-body">
+            <!-- Hidden Letter Inside -->
+            <div class="envelope-letter" id="envelope-letter">
+              <div class="letter-title">Dearest Kirti 💖</div>
+              <p class="letter-text">
+                You are cordially invited to celebrate the birthday of the most special person!
+                May your day be filled with joy, magic, and boundless love.
+              </p>
+              <button class="letter-btn" onclick="scrollToFairytale(event)">Begin The Fairytale ✨</button>
             </div>
-            <p style="font-size: 0.85rem; opacity: 0.7;">(Tap envelope to break seal & open story)</p>
+            <!-- Front Pocket Structure -->
+            <div class="envelope-pocket"></div>
+            <!-- Top Flap -->
+            <div class="envelope-flap" id="env-flap"></div>
+            <!-- Wax Seal -->
+            <div class="wax-seal" id="wax-seal">👑</div>
+          </div>
         </div>
-    </div>
+      </div>
+    </section>
 
-    <!-- PAGE 2: CHAPTER 1 - DESTINY -->
-    <div class="page" id="page-2">
-        <div class="glass-card">
-            <p class="font-serif" style="color: var(--gold-primary);">Chapter 1</p>
-            <h1 class="font-title">Destiny</h1>
-            <p id="typewriter-ch1" style="min-height: 80px; font-size: 1.3rem; margin: 15px 0;"></p>
-            <div style="font-size: 4.5rem; margin: 15px 0;">📖 ✨ 💖</div>
-            <button class="btn-glass" onclick="goToPage(3)">Enter The Rose Garden 🌹</button>
+    <!-- CHAPTER 1: STORY & TIMELINE -->
+    <section class="chapter-section" id="chapter-story">
+      <h2 class="chapter-title">📖 Chapter I: The Magical Journey</h2>
+      <p style="text-align: center; margin-bottom: 25px; color: #777;">
+        Every moment with Kirti adds a golden page to the storybook.
+      </p>
+
+      <div class="timeline">
+        <div class="timeline-event">
+          <div class="timeline-date">CHAPTER 1: THE FIRST SPARK</div>
+          <p>The day Kirti brought warmth, laughter, and radiance into everyone's life.</p>
         </div>
-    </div>
-
-    <!-- PAGE 3: CHAPTER 2 - THE MAGICAL GARDEN -->
-    <div class="page" id="page-3">
-        <div class="glass-card">
-            <p class="font-serif" style="color: var(--gold-primary);">Chapter 2</p>
-            <h1 class="font-title">The Flower Garden</h1>
-            <p>You didn't just smile... you made my entire world bloom with roses, tulips, and cherry blossoms.</p>
-            <div class="garden-bed" id="garden-bed"></div>
-            <p style="font-size: 0.85rem; color: var(--gold-primary);">(Tap any flower to bloom floating petals!)</p>
-            <button class="btn-glass" onclick="goToPage(4)">Meet Teddy 🧸</button>
+        <div class="timeline-event">
+          <div class="timeline-date">CHAPTER 2: MEMORIES & SMILES</div>
+          <p>Countless coffee chats, midnight jokes, and unforgettable adventures together.</p>
         </div>
-    </div>
-
-    <!-- PAGE 4: CHAPTER 3 - TEDDY STORY -->
-    <div class="page" id="page-4">
-        <div class="glass-card">
-            <p class="font-serif" style="color: var(--gold-primary);">Chapter 3</p>
-            <h1 class="font-title">A Special Delivery</h1>
-            <p id="teddy-dialogue">"Hi Kirti... Someone loves you very, very much!"</p>
-            <div class="teddy-stage">
-                <div class="teddy-actor" id="teddy-actor">🧸💐</div>
-            </div>
-            <button class="btn-glass" onclick="goToPage(5)">Continue Story ✨</button>
+        <div class="timeline-event">
+          <div class="timeline-date">CHAPTER 3: TODAY'S CELEBRATION</div>
+          <p>Blowing out candles, making sweet wishes, and entering another brilliant year!</p>
         </div>
-    </div>
+      </div>
+    </section>
 
-    <!-- PAGE 5: CHAPTER 4 - PROFESSIONALLY STUBBORN -->
-    <div class="page" id="page-5">
-        <div class="glass-card">
-            <p class="font-serif" style="color: var(--gold-primary);">Chapter 4</p>
-            <h1 class="font-title">⚠️ System Scan</h1>
-            <p>Scanning Kirti's attitude & stubbornness level...</p>
-            <div class="scanner-container">
-                <div class="scanner-fill" id="scan-fill"></div>
-            </div>
-            <div id="scan-result" style="opacity: 0; transition: opacity 0.8s;">
-                <h2 style="color: #ff758f; text-shadow: 0 0 15px red;">Stubbornness: 99.999999% 😂</h2>
-                <p style="color: #fff;">ERROR: Cannot Reduce. Developer also gave up! 😂</p>
-            </div>
-            <button class="btn-glass" id="btn-p5-next" style="opacity:0;" onclick="goToPage(6)">Attend TED Talk 🎤</button>
+    <!-- CHAPTER 2: ARCADE & HEART CATCHER -->
+    <section class="chapter-section" id="chapter-arcade">
+      <h2 class="chapter-title">🎮 Chapter II: Catch Kirti's Birthday Stars</h2>
+      <p style="text-align: center; margin-bottom: 15px; font-size: 0.9rem;">
+        Click or tap the falling hearts & stars to collect points!
+      </p>
+
+      <div id="game-container" onclick="catchItem(event)">
+        <div class="game-score-board">Stars Collected: <span id="game-score">0</span></div>
+      </div>
+    </section>
+
+    <!-- CHAPTER 3: CAKE CUTTING & WISH JAR -->
+    <section class="chapter-section" id="chapter-cake">
+      <h2 class="chapter-title">🎂 Chapter III: Blow The Candles & Wish</h2>
+      
+      <div class="cake-wrapper">
+        <p style="margin-bottom: 15px; font-weight: 600;">Tap the candle flames to blow them out!</p>
+        <div class="cake">
+          <div class="candles">
+            <div class="candle" onclick="extinguishCandle(this)"><div class="flame"></div></div>
+            <div class="candle" onclick="extinguishCandle(this)"><div class="flame"></div></div>
+            <div class="candle" onclick="extinguishCandle(this)"><div class="flame"></div></div>
+          </div>
         </div>
-    </div>
+      </div>
 
-    <!-- PAGE 6: CHAPTER 5 - TED TALK -->
-    <div class="page" id="page-6">
-        <div class="stage-curtain-l" id="curtain-l"></div>
-        <div class="stage-curtain-r" id="curtain-r"></div>
-        <div class="spotlight-beam" id="spotlight"></div>
-        <div class="glass-card" style="z-index: 20;">
-            <p class="font-serif" style="color: var(--gold-primary);">Chapter 5</p>
-            <h1 class="font-title">TEDx Kirti</h1>
-            <p>Speaker: <strong>Kirti</strong> | Topic: <em>"I'll just say one thing..."</em></p>
-            <div style="font-size: 4rem; margin: 15px 0;">🎤 👏 👏 📸</div>
-            <p style="font-size: 1rem; color: #ffb3c1;">Duration: 2 Hours 47 Minutes 😂😂😂</p>
-            <button class="btn-glass" onclick="goToPage(7)">That Quiet Moment... 💖</button>
-        </div>
-    </div>
+      <hr style="border: none; border-top: 1px dashed var(--accent-pink); margin: 30px 0;">
 
-    <!-- PAGE 7: CHAPTER 6 - THAT LOOK (EMOTIONAL DARK MODE) -->
-    <div class="page" id="page-7">
-        <div class="glass-card" style="background: rgba(0, 0, 0, 0.45); border-color: rgba(212, 175, 55, 0.4);">
-            <p class="font-serif" style="color: var(--gold-primary);">Chapter 6</p>
-            <h1 class="font-title">That Look</h1>
-            <p id="look-text-1" style="font-size: 1.4rem; margin: 20px 0; min-height: 40px;"></p>
-            <p id="look-text-2" class="font-cursive" style="font-size: 3rem; color: var(--gold-light); min-height: 60px;"></p>
-            <button class="btn-glass" onclick="goToPage(8)">Argument Simulator ⚖️</button>
-        </div>
-    </div>
+      <h3 style="text-align: center; margin-bottom: 15px; color: var(--accent-rose);">🌟 Kirti's Birthday Wish Jar</h3>
+      <div class="wish-input-group">
+        <input type="text" id="wish-input" class="wish-input" placeholder="Type a heartfelt wish for Kirti...">
+        <button class="letter-btn" onclick="addWish()">Send Wish ✨</button>
+      </div>
 
-    <!-- PAGE 8: CHAPTER 7 - ARGUMENT SIMULATOR -->
-    <div class="page" id="page-8">
-        <div class="glass-card">
-            <p class="font-serif" style="color: var(--gold-primary);">Chapter 7</p>
-            <h1 class="font-title">Who Is Always Right?</h1>
-            <p>Please select the correct answer to proceed:</p>
-            <div style="display: flex; flex-direction: column; gap: 14px; margin: 20px 0; align-items: center;">
-                <button class="btn-glass btn-secondary" style="width: 260px;" onclick="selectArgumentAnswer('bhanu')">⭕ Bhanu</button>
-                <button class="btn-glass" style="width: 260px;" onclick="selectArgumentAnswer('kirti')">⭕ Kirti</button>
-            </div>
-            <div id="argument-result" style="min-height: 60px;"></div>
-            <button class="btn-glass" id="btn-p8-next" style="display:none;" onclick="goToPage(9)">Check Love Meter 💓</button>
-        </div>
-    </div>
+      <div class="wish-list" id="wish-list">
+        <div class="wish-chip">💖 Endless happiness and love!</div>
+        <div class="wish-chip">🎉 Success in all your dreams!</div>
+        <div class="wish-chip">✨ Stay radiant always!</div>
+      </div>
+    </section>
+  </main>
 
-    <!-- PAGE 9: CHAPTER 8 - LOVE METER -->
-    <div class="page" id="page-9">
-        <div class="glass-card">
-            <p class="font-serif" style="color: var(--gold-primary);">Chapter 8</p>
-            <h1 class="font-title">Compatibility Scanner</h1>
-            <div style="margin: 20px 0; text-align: left; max-width: 400px; margin-left: auto; margin-right: auto;">
-                <p>Compatibility: <strong style="color:var(--gold-primary);">100%</strong></p>
-                <p>Trust: <strong style="color:var(--gold-primary);">100%</strong></p>
-                <p>Respect: <strong style="color:var(--gold-primary);">100%</strong></p>
-                <p>Love: <strong style="font-size: 1.8rem; color:var(--rose-500);">∞ (Infinite)</strong></p>
-            </div>
-            <button class="btn-glass" onclick="goToPage(10)">Things I Love About You 💌</button>
-        </div>
-    </div>
+  <script>
+    /* =========================================================
+       1. ENVELOPE UNBOXING LOGIC (FIXED & TESTED)
+       ========================================================= */
+    let isOpened = false;
 
-    <!-- PAGE 10: CHAPTER 9 - THINGS I LOVE ABOUT YOU -->
-    <div class="page" id="page-10">
-        <div class="glass-card">
-            <p class="font-serif" style="color: var(--gold-primary);">Chapter 9</p>
-            <h1 class="font-title">Things I Love About You</h1>
-            <p>(Tap each card to flip!)</p>
-            <div class="cards-grid">
-                <div class="flip-card" onclick="this.classList.toggle('flipped'); AudioEngine.playPop();">
-                    <div class="flip-card-inner"><div class="card-front">😊</div><div class="card-back">Your Smile</div></div>
-                </div>
-                <div class="flip-card" onclick="this.classList.toggle('flipped'); AudioEngine.playPop();">
-                    <div class="flip-card-inner"><div class="card-front">💖</div><div class="card-back">Your Kindness</div></div>
-                </div>
-                <div class="flip-card" onclick="this.classList.toggle('flipped'); AudioEngine.playPop();">
-                    <div class="flip-card-inner"><div class="card-front">🌸</div><div class="card-back">Your Simplicity</div></div>
-                </div>
-                <div class="flip-card" onclick="this.classList.toggle('flipped'); AudioEngine.playPop();">
-                    <div class="flip-card-inner"><div class="card-front">✨</div><div class="card-back">Your Eyes</div></div>
-                </div>
-                <div class="flip-card" onclick="this.classList.toggle('flipped'); AudioEngine.playPop();">
-                    <div class="flip-card-inner"><div class="card-front">😂</div><div class="card-back">Your Laugh</div></div>
-                </div>
-                <div class="flip-card" onclick="this.classList.toggle('flipped'); AudioEngine.playPop();">
-                    <div class="flip-card-inner"><div class="card-front">🥰</div><div class="card-back">Your Caring Nature</div></div>
-                </div>
-                <div class="flip-card" onclick="this.classList.toggle('flipped'); AudioEngine.playPop();">
-                    <div class="flip-card-inner"><div class="card-front">😜</div><div class="card-back">Your Stubbornness</div></div>
-                </div>
-                <div class="flip-card" onclick="this.classList.toggle('flipped'); AudioEngine.playPop();">
-                    <div class="flip-card-inner"><div class="card-front">❤️</div><div class="card-back">Everything.</div></div>
-                </div>
-            </div>
-            <button class="btn-glass" onclick="goToPage(11)">Play Funny Games 🎮</button>
-        </div>
-    </div>
+    function openEnvelope() {
+      if (isOpened) return;
+      isOpened = true;
 
-    <!-- PAGE 11: CHAPTER 10 - FUNNY MINI GAMES -->
-    <div class="page" id="page-11">
-        <div class="glass-card">
-            <p class="font-serif" style="color: var(--gold-primary);">Chapter 10</p>
-            <h1 class="font-title">Catch My Heart!</h1>
-            <p>Score: <span id="game-score" style="color:var(--gold-primary); font-weight:bold;">0</span> / 5</p>
-            <div class="game-stage" id="game-stage">
-                <div class="game-heart-target" id="target-heart" onclick="catchHeart()">💖</div>
-            </div>
-            <p class="font-cursive" id="game-message" style="font-size: 2rem; color: var(--gold-primary); min-height: 40px;"></p>
-            <button class="btn-glass" id="btn-p11-next" style="display:none;" onclick="goToPage(12)">Time for Cake! 🎂</button>
-        </div>
-    </div>
+      const envWrapper = document.getElementById('envelope-wrapper');
+      const envPrompt = document.getElementById('envelope-prompt');
+      
+      envWrapper.classList.add('opened');
+      envPrompt.innerText = "✨ Unwrapping Kirti's Special Invitation... ✨";
 
-    <!-- PAGE 12: CHAPTER 11 - BIRTHDAY CAKE -->
-    <div class="page" id="page-12">
-        <div class="glass-card">
-            <p class="font-serif" style="color: var(--gold-primary);">Chapter 11</p>
-            <h1 class="font-cursive" style="font-size: 4rem;">Happy Birthday, Kirti!</h1>
-            <p>(Tap the cake to blow out the candles & make a wish!)</p>
-            <div class="cake-wrapper" onclick="blowOutCandles()">
-                <svg viewBox="0 0 200 200" width="100%" height="100%">
-                    <ellipse cx="100" cy="170" rx="80" ry="15" fill="#d4af37" opacity="0.6"/>
-                    <rect x="35" y="110" width="130" height="50" rx="10" fill="#ff758f"/>
-                    <path d="M 35 125 Q 50 135 65 125 Q 80 135 95 125 Q 110 135 125 125 Q 140 135 165 125 L 165 110 L 35 110 Z" fill="#fff0f5"/>
-                    <rect x="55" y="70" width="90" height="40" rx="8" fill="#ff4d6d"/>
-                    <path d="M 55 82 Q 70 90 85 82 Q 100 90 115 82 Q 130 90 145 82 L 145 70 L 55 70 Z" fill="#fff0f5"/>
-                    <rect x="75" y="45" width="8" height="25" fill="#ffe6ea"/>
-                    <polygon class="flame" id="flame-1" points="79,30 74,43 84,43" fill="#ffbd59"/>
-                    <rect x="96" y="40" width="8" height="30" fill="#ffe6ea"/>
-                    <polygon class="flame" id="flame-2" points="100,25 95,38 105,38" fill="#ffbd59"/>
-                    <rect x="117" y="45" width="8" height="25" fill="#ffe6ea"/>
-                    <polygon class="flame" id="flame-3" points="121,30 116,43 126,43" fill="#ffbd59"/>
-                </svg>
-            </div>
-            <p id="cake-status" style="color: var(--gold-primary); font-weight: 600; min-height: 24px;"></p>
-            <button class="btn-glass" id="btn-p12-next" style="display:none;" onclick="goToPage(13)">Wish Upon A Star 🌙</button>
-        </div>
-    </div>
+      // Trigger Confetti / Fireworks burst
+      triggerFireworksBurst();
 
-    <!-- PAGE 13: CHAPTER 12 - WISH UPON A STAR -->
-    <div class="page" id="page-13">
-        <div class="glass-card">
-            <p class="font-serif" style="color: var(--gold-primary);">Chapter 12</p>
-            <h1 class="font-title">Wish Upon A Star</h1>
-            <p>Tap anywhere in the sky or letters below to uncover hidden love messages...</p>
-            <div class="letters-grid">
-                <div class="secret-env" onclick="openSecretLetter('I Love You Beyond Words ❤️')">✉️</div>
-                <div class="secret-env" onclick="openSecretLetter('You Are My Peace 🥰')">✉️</div>
-                <div class="secret-env" onclick="openSecretLetter('My Favourite Person Forever ✨')">✉️</div>
-            </div>
-            <p class="font-cursive" id="secret-output" style="font-size: 2.2rem; color: var(--gold-primary); min-height: 50px;"></p>
-            <button class="btn-glass" onclick="goToPage(14)">The Ultimate Question 💍</button>
-        </div>
-    </div>
+      // Auto start music on interaction
+      if (!isPlaying) {
+        toggleMusic();
+      }
+    }
 
-    <!-- PAGE 14: CHAPTER 13 & 14 - FOREVER & RUNAWAY GAME -->
-    <div class="page" id="page-14">
-        <div class="glass-card">
-            <p class="font-serif" style="color: var(--gold-primary);">Chapter 13 & 14</p>
-            <h1 class="font-title">No Matter Where Life Takes Us...</h1>
-            <h2 class="font-cursive" style="font-size: 3.2rem;">Will you always stay by my side?</h2>
-            <div class="runaway-box">
-                <button class="btn-glass" style="width: 280px;" onclick="goToPage(15)">YES! Forever & Always ❤️</button>
-                <button class="btn-glass" style="width: 280px;" onclick="goToPage(15)">ABSOLUTELY YES 🥰</button>
-                <button class="btn-glass" id="btn-no-runaway" onmouseover="evadeNo()" onclick="evadeNo()">No 😜</button>
-            </div>
-        </div>
-    </div>
+    function scrollToFairytale(e) {
+      e.stopPropagation();
+      document.getElementById('chapter-story').scrollIntoView({ behavior: 'smooth' });
+    }
 
-    <!-- PAGE 15: GRAND FINALE -->
-    <div class="page" id="page-15">
-        <div class="glass-card" style="background: rgba(11, 2, 20, 0.7); border-color: var(--gold-primary);">
-            <h1 class="font-cursive" id="finale-title" style="font-size: 3.8rem; text-shadow: 0 0 30px var(--rose-500);"></h1>
-            <p id="finale-subtitle" class="font-serif" style="color: var(--gold-primary); font-size: 1.4rem; margin-top: 15px;"></p>
-            <p style="margin-top: 20px; font-size: 1rem; opacity: 0.8;">Happy Birthday, Kirti ❤️ Yours Always, Bhanu</p>
-        </div>
-    </div>
+    /* =========================================================
+       2. MULTI-TRACK AUDIO ENGINE & WEB AUDIO SYNTHESIZER
+       ========================================================= */
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    let isPlaying = false;
+    let synthInterval = null;
 
-    <!-- ==========================================================================
-       JAVASCRIPT ARCHITECTURE
-       ========================================================================== -->
-    <script>
-        /* --- 1. PROCEDURAL WEB AUDIO SYNTHESIZER --- */
-        const AudioEngine = (() => {
-            let ctx = null;
-            let isMuted = false;
-            let activeTimer = null;
+    // Real audio sources + Web Audio fallback
+    const audioTracks = {
+      piano: "https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=romantic-piano-112188.mp3",
+      birthday: "https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a7315b.mp3?filename=happy-birthday-15528.mp3",
+      acoustic: "https://cdn.pixabay.com/download/audio/2022/01/18/audio_d0a13f69d2.mp3?filename=sweet-acoustic-19349.mp3",
+      lofi: "https://cdn.pixabay.com/download/audio/2022/03/10/audio_51d2e1b1d7.mp3?filename=lofi-study-112191.mp3"
+    };
 
-            function init() {
-                if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)();
-            }
+    const audioElement = new Audio();
+    audioElement.crossOrigin = "anonymous";
+    audioElement.loop = true;
 
-            function playTone(freq, duration, type = 'sine', gainVal = 0.1) {
-                if (isMuted) return;
-                init();
-                try {
-                    const osc = ctx.createOscillator();
-                    const gain = ctx.createGain();
-                    osc.type = type;
-                    osc.frequency.setValueAtTime(freq, ctx.currentTime);
-                    gain.gain.setValueAtTime(gainVal, ctx.currentTime);
-                    gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + duration);
-                    osc.connect(gain);
-                    gain.connect(ctx.destination);
-                    osc.start();
-                    osc.stop(ctx.currentTime + duration);
-                } catch(e) {}
-            }
+    const playPauseBtn = document.getElementById('play-pause-btn');
+    const songSelector = document.getElementById('song-selector');
+    const eqVisualizer = document.getElementById('eq-visualizer');
 
-            function playPop() { playTone(580, 0.08, 'triangle', 0.15); }
-            function playSealBreak() { playTone(160, 0.25, 'sawtooth', 0.2); }
+    function toggleMusic() {
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
 
-            function switchTrack(track) {
-                if (activeTimer) clearInterval(activeTimer);
-                if (isMuted) return;
-                init();
+      if (!isPlaying) {
+        const selectedTrack = songSelector.value;
+        audioElement.src = audioTracks[selectedTrack];
+        
+        audioElement.play().then(() => {
+          setAudioState(true);
+        }).catch(() => {
+          // Play fallback synthesizer notes if browser blocks external MP3 audio
+          startSynthMelody();
+          setAudioState(true);
+        });
+      } else {
+        audioElement.pause();
+        stopSynthMelody();
+        setAudioState(false);
+      }
+    }
 
-                if (track === 'piano') {
-                    const notes = [261.63, 329.63, 392.00, 523.25, 440.00, 349.23];
-                    let i = 0;
-                    activeTimer = setInterval(() => {
-                        playTone(notes[i % notes.length], 1.2, 'sine', 0.06);
-                        i++;
-                    }, 850);
-                } else if (track === 'violin') {
-                    const notes = [440, 493.88, 523.25, 587.33];
-                    let i = 0;
-                    activeTimer = setInterval(() => {
-                        playTone(notes[i % notes.length], 1.6, 'sawtooth', 0.035);
-                        i++;
-                    }, 1300);
-                } else if (track === 'bday') {
-                    const notes = [261, 261, 293, 261, 349, 329];
-                    let i = 0;
-                    activeTimer = setInterval(() => {
-                        playTone(notes[i % notes.length], 0.4, 'triangle', 0.1);
-                        i++;
-                    }, 420);
-                }
-            }
+    function setAudioState(playing) {
+      isPlaying = playing;
+      playPauseBtn.innerText = playing ? "⏸" : "▶";
+      const bars = eqVisualizer.querySelectorAll('.eq-bar');
+      bars.forEach(bar => {
+        if (playing) bar.classList.add('playing');
+        else bar.classList.remove('playing');
+      });
+    }
 
-            return {
-                init, playTone, playPop, playSealBreak, switchTrack,
-                toggleMute: () => {
-                    isMuted = !isMuted;
-                    document.getElementById('btn-audio-toggle').innerText = isMuted ? '🔇' : '🎵';
-                    if (!isMuted) switchTrack(document.getElementById('music-select').value);
-                    else if (activeTimer) clearInterval(activeTimer);
-                }
-            };
-        })();
+    songSelector.addEventListener('change', () => {
+      if (isPlaying) {
+        audioElement.pause();
+        stopSynthMelody();
+        audioElement.src = audioTracks[songSelector.value];
+        audioElement.play().catch(() => startSynthMelody());
+      }
+    });
 
-        /* --- 2. CANVAS PARTICLE & FIREWORKS ENGINE --- */
-        const CanvasEngine = (() => {
-            const pCanvas = document.getElementById('canvas-particles');
-            const pCtx = pCanvas.getContext('2d');
-            const fCanvas = document.getElementById('canvas-fireworks');
-            const fCtx = fCanvas.getContext('2d');
-            
-            let particles = [];
-            let fireworks = [];
+    playPauseBtn.addEventListener('click', toggleMusic);
 
-            function resize() {
-                pCanvas.width = fCanvas.width = window.innerWidth;
-                pCanvas.height = fCanvas.height = window.innerHeight;
-            }
-            window.addEventListener('resize', resize);
-            resize();
+    // Fallback Synthesizer for Guaranteed Music Playback
+    function playNote(freq, duration) {
+      if (!audioCtx) return;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'sine';
+      osc.frequency.value = freq;
+      gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start();
+      osc.stop(audioCtx.currentTime + duration);
+    }
 
-            function spawnParticle(x, y, emoji = null) {
-                particles.push({
-                    x: x || Math.random() * pCanvas.width,
-                    y: y || -20,
-                    vx: (Math.random() - 0.5) * 1.6,
-                    vy: Math.random() * 2 + 1,
-                    size: Math.random() * 16 + 12,
-                    emoji: emoji || ['🌸', '🌹', '✨', '💖', '🦋'][Math.floor(Math.random() * 5)],
-                    opacity: 1
-                });
-            }
+    function startSynthMelody() {
+      stopSynthMelody();
+      const notes = [261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 493.88, 523.25];
+      let idx = 0;
+      synthInterval = setInterval(() => {
+        playNote(notes[idx % notes.length], 0.8);
+        idx++;
+      }, 500);
+    }
 
-            function spawnFirework(x, y) {
-                const colors = ['#ff4d6d', '#ffd166', '#06d6a0', '#118ab2', '#ff758f', '#d4af37'];
-                for (let i = 0; i < 45; i++) {
-                    const angle = (Math.PI * 2 / 45) * i;
-                    const speed = Math.random() * 5.5 + 2;
-                    fireworks.push({
-                        x, y,
-                        vx: Math.cos(angle) * speed,
-                        vy: Math.sin(angle) * speed,
-                        radius: Math.random() * 3 + 2,
-                        color: colors[Math.floor(Math.random() * colors.length)],
-                        alpha: 1
-                    });
-                }
-            }
+    function stopSynthMelody() {
+      if (synthInterval) clearInterval(synthInterval);
+    }
 
-            function render() {
-                pCtx.clearRect(0, 0, pCanvas.width, pCanvas.height);
-                fCtx.clearRect(0, 0, fCanvas.width, fCanvas.height);
+    /* =========================================================
+       3. THEME SWITCHER
+       ========================================================= */
+    const themeBtn = document.getElementById('theme-btn');
+    themeBtn.addEventListener('click', () => {
+      const currentTheme = document.body.getAttribute('data-theme');
+      if (currentTheme === 'dark') {
+        document.body.removeAttribute('data-theme');
+        themeBtn.innerText = '🌙 Midnight';
+      } else {
+        document.body.setAttribute('data-theme', 'dark');
+        themeBtn.innerText = '☀️ Rose Gold';
+      }
+    });
 
-                particles.forEach((p, idx) => {
-                    p.x += p.vx; p.y += p.vy; p.opacity -= 0.003;
-                    pCtx.save();
-                    pCtx.globalAlpha = Math.max(0, p.opacity);
-                    pCtx.font = `${p.size}px serif`;
-                    pCtx.fillText(p.emoji, p.x, p.y);
-                    pCtx.restore();
-                    if (p.opacity <= 0 || p.y > pCanvas.height) particles.splice(idx, 1);
-                });
+    /* =========================================================
+       4. HEART CATCHER MINI-GAME
+       ========================================================= */
+    let score = 0;
+    const gameContainer = document.getElementById('game-container');
+    const scoreElem = document.getElementById('game-score');
 
-                fireworks.forEach((f, idx) => {
-                    f.x += f.vx; f.y += f.vy; f.vy += 0.06; f.alpha -= 0.016;
-                    fCtx.save();
-                    fCtx.globalAlpha = Math.max(0, f.alpha);
-                    fCtx.fillStyle = f.color;
-                    fCtx.beginPath();
-                    fCtx.arc(f.x, f.y, f.radius, 0, Math.PI * 2);
-                    fCtx.fill();
-                    fCtx.restore();
-                    if (f.alpha <= 0) fireworks.splice(idx, 1);
-                });
+    function spawnGameItem() {
+      if (!gameContainer) return;
+      const item = document.createElement('div');
+      item.className = 'falling-item';
+      const items = ['💖', '⭐', '🌸', '👑', '🎂'];
+      item.innerText = items[Math.floor(Math.random() * items.length)];
+      item.style.left = Math.random() * (gameContainer.clientWidth - 40) + 'px';
+      item.style.animationDuration = (2.5 + Math.random() * 2) + 's';
+      
+      item.onclick = (e) => {
+        e.stopPropagation();
+        score += 10;
+        scoreElem.innerText = score;
+        item.remove();
+      };
 
-                if (Math.random() < 0.06) spawnParticle();
-                requestAnimationFrame(render);
-            }
+      gameContainer.appendChild(item);
 
-            window.addEventListener('mousemove', (e) => {
-                if (Math.random() < 0.25) spawnParticle(e.clientX, e.clientY, '✨');
-            });
+      setTimeout(() => {
+        if (item.parentNode) item.remove();
+      }, 4500);
+    }
 
-            render();
-            return { spawnParticle, spawnFirework };
-        })();
+    setInterval(spawnGameItem, 1200);
 
-        /* --- 3. PAGE FLOW & INTERACTIVE LOGIC --- */
-        let currentPage = 1;
-
-        function goToPage(page) {
-            document.getElementById(`page-${currentPage}`).classList.remove('active');
-            currentPage = page;
-            const nextEl = document.getElementById(`page-${currentPage}`);
-            nextEl.classList.add('active');
-
-            // Dark Mode toggle for emotional scene
-            if (page === 7) document.body.classList.add('dark-emotional-mode');
-            else document.body.classList.remove('dark-emotional-mode');
-
-            // Trigger chapter routines
-            if (page === 2) triggerTypewriter("Once upon a time, a beautiful soul named Kirti stepped into my life... and turned every ordinary moment into pure magic.");
-            if (page === 3) initGardenBed();
-            if (page === 4) animateTeddy();
-            if (page === 5) triggerScannerBar();
-            if (page === 6) triggerTedTalk();
-            if (page === 7) triggerThatLook();
-            if (page === 15) triggerConstellationFinale();
+    /* =========================================================
+       5. CAKE & CANDLE INTERACTION
+       ========================================================= */
+    let candlesLit = 3;
+    function extinguishCandle(candle) {
+      const flame = candle.querySelector('.flame');
+      if (flame && !flame.classList.contains('extinguished')) {
+        flame.classList.add('extinguished');
+        candlesLit--;
+        triggerFireworksBurst();
+        if (candlesLit === 0) {
+          setTimeout(() => {
+            alert("🎉 All candles blown! May all Kirti's dreams come true! ✨");
+          }, 300);
         }
+      }
+    }
 
-        /* CH 1: ENVELOPE OPEN */
-        function openEnvelope() {
-            AudioEngine.playSealBreak();
-            document.getElementById('env-seal').style.opacity = '0';
-            document.getElementById('env-flap').style.transform = 'rotateX(180deg)';
-            document.getElementById('env-letter').style.transform = 'translateY(-110px)';
-            for (let i = 0; i < 20; i++) CanvasEngine.spawnParticle(window.innerWidth / 2, window.innerHeight / 2);
-            setTimeout(() => goToPage(2), 1600);
-        }
+    /* =========================================================
+       6. WISH JAR SYSTEM
+       ========================================================= */
+    function addWish() {
+      const input = document.getElementById('wish-input');
+      const text = input.value.trim();
+      if (text) {
+        const wishList = document.getElementById('wish-list');
+        const chip = document.createElement('div');
+        chip.className = 'wish-chip';
+        chip.innerText = "✨ " + text;
+        wishList.prepend(chip);
+        input.value = '';
+        triggerFireworksBurst();
+      }
+    }
 
-        /* CH 2: TYPEWRITER */
-        function triggerTypewriter(text) {
-            const el = document.getElementById('typewriter-ch1');
-            el.innerHTML = '';
-            let i = 0;
-            const timer = setInterval(() => {
-                if (i < text.length) {
-                    el.innerHTML += text.charAt(i);
-                    if (i % 3 === 0) AudioEngine.playTone(600, 0.03, 'sine', 0.02);
-                    i++;
-                } else clearInterval(timer);
-            }, 40);
-        }
+    /* =========================================================
+       7. AMBIENT PARTICLES & FIREWORKS ENGINE
+       ========================================================= */
+    const canvas = document.getElementById('ambient-canvas');
+    const ctx = canvas.getContext('2d');
+    const fwCanvas = document.getElementById('fireworks-canvas');
+    const fwCtx = fwCanvas.getContext('2d');
 
-        /* CH 3: GARDEN BED */
-        function initGardenBed() {
-            const container = document.getElementById('garden-bed');
-            if (container.children.length > 0) return;
-            const flowers = ['🌹', '🌷', '🌸', '🌺', '🌼', '🌻', '💜', '💐', '🌳', '🐝', '🦋'];
-            flowers.forEach((f) => {
-                const span = document.createElement('span');
-                span.className = 'flower-node';
-                span.innerText = f;
-                span.onclick = (e) => {
-                    AudioEngine.playPop();
-                    CanvasEngine.spawnParticle(e.clientX, e.clientY, f);
-                };
-                container.appendChild(span);
-            });
-        }
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      fwCanvas.width = window.innerWidth;
+      fwCanvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
 
-        /* CH 4: ANIMATED TEDDY */
-        function animateTeddy() {
-            const teddy = document.getElementById('teddy-actor');
-            const dialogue = document.getElementById('teddy-dialogue');
-            let pos = -80;
-            const timer = setInterval(() => {
-                pos += 4;
-                teddy.style.left = pos + 'px';
-                if (pos === 80) { // Trip
-                    teddy.innerText = '💥🧸';
-                    dialogue.innerText = "Oops! Stumbled and dropped flowers...";
-                }
-                if (pos === 120) { // Recover
-                    teddy.innerText = '🧸💐';
-                    dialogue.innerText = "Picked them up! Here is a bouquet for you, Kirti!";
-                }
-                if (pos >= 220) clearInterval(timer);
-            }, 50);
-        }
+    // Floating Hearts/Stars
+    const particles = Array.from({ length: 25 }, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      size: Math.random() * 12 + 8,
+      speedY: Math.random() * 0.8 + 0.3,
+      symbol: ['🌸', '✨', '💖'][Math.floor(Math.random() * 3)]
+    }));
 
-        /* CH 5: STUBBORNNESS SCANNER */
-        function triggerScannerBar() {
-            const fill = document.getElementById('scan-fill');
-            fill.style.width = '0%';
-            setTimeout(() => {
-                fill.style.width = '99.999999%';
-                setTimeout(() => {
-                    AudioEngine.playPop();
-                    document.getElementById('scan-result').style.opacity = '1';
-                    document.getElementById('btn-p5-next').style.opacity = '1';
-                }, 3600);
-            }, 300);
-        }
+    function animateAmbient() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => {
+        ctx.font = `${p.size}px sans-serif`;
+        ctx.fillText(p.symbol, p.x, p.y);
+        p.y -= p.speedY;
+        if (p.y < -20) p.y = canvas.height + 20;
+      });
+      requestAnimationFrame(animateAmbient);
+    }
+    animateAmbient();
 
-        /* CH 6: TED TALK */
-        function triggerTedTalk() {
-            setTimeout(() => {
-                document.getElementById('curtain-l').style.transform = 'scaleX(0)';
-                document.getElementById('curtain-r').style.transform = 'scaleX(0)';
-                document.getElementById('spotlight').style.opacity = '1';
-                AudioEngine.playTone(320, 0.5, 'triangle', 0.1);
-            }, 500);
-        }
+    // Fireworks
+    let fireworks = [];
+    function triggerFireworksBurst() {
+      const x = Math.random() * fwCanvas.width;
+      const y = fwCanvas.height * 0.4;
+      for (let i = 0; i < 30; i++) {
+        fireworks.push({
+          x, y,
+          vx: (Math.random() - 0.5) * 8,
+          vy: (Math.random() - 0.5) * 8,
+          color: `hsl(${Math.random() * 360}, 100%, 60%)`,
+          alpha: 1
+        });
+      }
+    }
 
-        /* CH 7: THAT LOOK */
-        function triggerThatLook() {
-            const t1 = document.getElementById('look-text-1');
-            const t2 = document.getElementById('look-text-2');
-            t1.innerText = ''; t2.innerText = '';
-            setTimeout(() => { t1.innerText = "Then you looked at me..."; }, 600);
-            setTimeout(() => { t2.innerText = "And my heart quietly whispered... She's the one."; }, 2200);
-        }
-
-        /* CH 8: ARGUMENT SIMULATOR */
-        function selectArgumentAnswer(choice) {
-            AudioEngine.playPop();
-            const res = document.getElementById('argument-result');
-            if (choice === 'bhanu') {
-                res.innerHTML = `<p style="color:#ff758f;">❌ Wrong Answer! Try Again 😂</p>`;
-            } else {
-                res.innerHTML = `<p style="color:#06d6a0;">✅ Correct! Kirti is always right! 🏳️ I surrender!</p>`;
-                document.getElementById('btn-p8-next').style.display = 'inline-flex';
-            }
-        }
-
-        /* CH 10: MINI GAME CATCH HEART */
-        let gameScore = 0;
-        function catchHeart() {
-            AudioEngine.playPop();
-            gameScore++;
-            document.getElementById('game-score').innerText = gameScore;
-            const target = document.getElementById('target-heart');
-            target.style.left = Math.random() * 75 + '%';
-            target.style.top = Math.random() * 65 + '%';
-            
-            const msgs = ["You unlocked my smile! 😊", "You unlocked my happiness! ✨", "You unlocked my heart! 💖", "You are amazing! 🥰", "Master Heart Catcher! ❤️"];
-            document.getElementById('game-message').innerText = msgs[(gameScore - 1) % msgs.length];
-
-            if (gameScore >= 5) {
-                document.getElementById('btn-p11-next').style.display = 'inline-flex';
-            }
-        }
-
-        /* CH 11: CAKE CANDLES */
-        function blowOutCandles() {
-            AudioEngine.playPop();
-            document.querySelectorAll('.flame').forEach(f => f.style.display = 'none');
-            document.getElementById('cake-status').innerText = '✨ Wish Made! Candles Blown Out! ✨';
-            CanvasEngine.spawnFirework(window.innerWidth / 2, window.innerHeight / 2);
-            document.getElementById('btn-p12-next').style.display = 'inline-flex';
-        }
-
-        /* CH 12: SECRET LETTERS */
-        function openSecretLetter(msg) {
-            AudioEngine.playPop();
-            document.getElementById('secret-output').innerText = msg;
-        }
-
-        /* RUNAWAY NO BUTTON */
-        let noScale = 1;
-        function evadeNo() {
-            const btn = document.getElementById('btn-no-runaway');
-            const x = (Math.random() - 0.5) * 220;
-            const y = (Math.random() - 0.5) * 150;
-            noScale -= 0.15;
-            if (noScale <= 0.1) {
-                btn.style.display = 'none';
-            } else {
-                btn.style.transform = `translate(${x}px, ${y}px) scale(${noScale})`;
-                const labels = ["Think Again!", "Really?", "Impossible 😂", "Nice Try!", "Only YES Exists ❤️"];
-                btn.innerText = labels[Math.floor(Math.random() * labels.length)];
-            }
-        }
-
-        /* GRAND FINALE */
-        function triggerConstellationFinale() {
-            const canvas = document.getElementById('canvas-night');
-            const ctx = canvas.getContext('2d');
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            for (let i = 0; i < 180; i++) {
-                ctx.fillStyle = `rgba(255, 255, 255, ${Math.random()})`;
-                ctx.beginPath();
-                ctx.arc(Math.random() * canvas.width, Math.random() * canvas.height, Math.random() * 2, 0, Math.PI * 2);
-                ctx.fill();
-            }
-
-            setTimeout(() => {
-                document.getElementById('finale-title').innerHTML = "❤️ KIRTI ❤️<br>BHANU";
-                document.getElementById('finale-subtitle').innerText = "✨ Forever Starts Here ✨";
-                setInterval(() => CanvasEngine.spawnFirework(Math.random() * canvas.width, Math.random() * canvas.height), 700);
-            }, 1000);
-        }
-
-        /* FLOATING TOAST */
-        function spawnLoveToast() {
-            AudioEngine.playPop();
-            const notes = ["I love you ❤️", "My favourite person ✨", "My peace 🥰", "My smile 😊", "Forever Yours 💖"];
-            const toast = document.createElement('div');
-            toast.className = 'floating-toast';
-            toast.innerText = notes[Math.floor(Math.random() * notes.length)];
-            toast.style.left = (Math.random() * 50 + 25) + 'vw';
-            toast.style.top = (Math.random() * 40 + 30) + 'vh';
-            document.body.appendChild(toast);
-            setTimeout(() => toast.remove(), 4500);
-        }
-
-        // Initialize audio context on first click
-        document.body.addEventListener('click', () => AudioEngine.init(), { once: true });
-    </script>
+    function animateFireworks() {
+      fwCtx.clearRect(0, 0, fwCanvas.width, fwCanvas.height);
+      fireworks.forEach((f, index) => {
+        fwCtx.globalAlpha = f.alpha;
+        fwCtx.fillStyle = f.color;
+        fwCtx.beginPath();
+        fwCtx.arc(f.x, f.y, 3, 0, Math.PI * 2);
+        fwCtx.fill();
+        f.x += f.vx;
+        f.y += f.vy;
+        f.alpha -= 0.02;
+        if (f.alpha <= 0) fireworks.splice(index, 1);
+      });
+      requestAnimationFrame(animateFireworks);
+    }
+    animateFireworks();
+  </script>
 </body>
 </html>
