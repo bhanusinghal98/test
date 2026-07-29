@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Kirti ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* --- GLOBAL STYLES --- */
+        :root {
+            --bg-color: #ffe6ea;
+            --text-main: #4a0e17;
+            --heart: #ff4d6d;
+        }
+        body, html {
+            margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden;
+            font-family: 'Quicksand', sans-serif; background: var(--bg-color); color: var(--text-main);
+            transition: background 2s ease;
+        }
+        .page {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            opacity: 0; pointer-events: none; transition: opacity 1.5s ease; z-index: 10;
+        }
+        .page.active { opacity: 1; pointer-events: auto; }
+        
+        h1, h2, .handwritten { font-family: 'Caveat', cursive; font-size: 3rem; margin: 10px; text-align: center; }
+        p { font-size: 1.2rem; text-align: center; max-width: 600px; padding: 20px; }
+        
+        .btn {
+            background: #ff758f; color: white; border: none; padding: 15px 30px; 
+            font-size: 1.2rem; border-radius: 30px; cursor: pointer; font-family: 'Quicksand';
+            box-shadow: 0 4px 15px rgba(255, 77, 109, 0.4); transition: transform 0.2s; margin-top: 20px;
+        }
+        .btn:hover { transform: scale(1.05); }
+
+        /* --- PARTICLES & EFFECTS --- */
+        #particle-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+        .petal { position: absolute; font-size: 20px; animation: fall linear infinite; }
+        .butterfly, .bee, .bird { position: absolute; font-size: 25px; z-index: 5; pointer-events: none; }
+        .floating-note { position: absolute; background: white; padding: 10px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); font-family: 'Caveat'; font-size: 1.5rem; animation: floatUp 4s forwards; opacity: 0; pointer-events: none; z-index: 20; }
+        
+        @keyframes fall { 0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; } 100% { transform: translateY(110vh) rotate(360deg); opacity: 0; } }
+        @keyframes floatUp { 0% { transform: translateY(0) scale(0.8); opacity: 1; } 100% { transform: translateY(-100px) scale(1); opacity: 0; } }
+
+        /* --- PAGE 1: ENVELOPE --- */
+        .envelope-wrapper { position: relative; width: 300px; height: 200px; cursor: pointer; }
+        .envelope { width: 100%; height: 100%; background: #ffb3c1; border-radius: 10px; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        .envelope-flap { position: absolute; top: 0; left: 0; border-left: 150px solid transparent; border-right: 150px solid transparent; border-top: 100px solid #ff758f; transform-origin: top; transition: transform 1s; z-index: 3; }
+        .wax-seal { position: absolute; top: 80px; left: 125px; width: 50px; height: 50px; background: darkred; border-radius: 50%; z-index: 4; display: flex; align-items: center; justify-content: center; color: gold; font-family: serif; font-weight: bold; transition: opacity 0.5s; }
+        .letter { position: absolute; bottom: 0; left: 10px; right: 10px; background: white; height: 180px; transition: transform 1.5s; z-index: 2; padding: 20px; box-sizing: border-box; text-align: center; }
+        
+        /* --- PAGE 4: SHY GIRL --- */
+        .chat-bubble { position: absolute; background: #e0fbfc; padding: 10px 20px; border-radius: 20px; font-weight: bold; opacity: 0; transform: scale(0); animation: popIn 0.3s forwards; }
+        @keyframes popIn { to { opacity: 1; transform: scale(1); } }
+
+        /* --- PAGE 5: TED TALK --- */
+        .stage { background: #1a0b10; width: 100%; height: 100%; color: white; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; }
+        .curtain { position: absolute; width: 50%; height: 100%; background: darkred; top: 0; z-index: 11; transition: transform 2s ease-in-out; }
+        .curtain-left { left: 0; transform-origin: left; }
+        .curtain-right { right: 0; transform-origin: right; }
+        .spotlight { position: absolute; top: -50px; width: 300px; height: 300px; background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%); border-radius: 50%; opacity: 0; transition: opacity 2s; }
+
+        /* --- PAGE 6: STUBBORN BAR --- */
+        .loading-container { width: 80%; max-width: 400px; height: 30px; border: 2px solid #333; border-radius: 15px; margin: 20px; overflow: hidden; background: #eee; }
+        .loading-bar { width: 0%; height: 100%; background: linear-gradient(90deg, #ff4d6d, #c1121f); transition: width 4s cubic-bezier(0.1, 0, 0.2, 1); }
+        
+        /* --- PAGE 9: TEDDY STORY --- */
+        .teddy-scene { position: relative; width: 300px; height: 200px; margin-top: 50px; }
+        .teddy-actor { font-size: 3rem; position: absolute; left: 0; bottom: 0; animation: teddyWalk 8s forwards; }
+        @keyframes teddyWalk {
+            0% { left: -50px; transform: rotate(0deg); }
+            30% { left: 100px; transform: rotate(0deg); }
+            35% { left: 110px; transform: rotate(90deg); } /* Trip */
+            45% { left: 110px; transform: rotate(90deg); } /* Pause */
+            55% { left: 110px; transform: rotate(0deg); }  /* Get up */
+            100% { left: 250px; transform: rotate(0deg); } /* Give flowers */
+        }
+
+        /* --- PAGE 11: CAKE --- */
+        .cake { font-size: 6rem; cursor: pointer; transition: transform 0.2s; user-select: none; }
+        .cake:hover { transform: scale(1.1); }
+
+        /* --- PAGE 12: CHOICES --- */
+        .choices-container { display: flex; flex-direction: column; gap: 10px; align-items: center; }
+        #no-btn { transition: all 0.2s; }
+
+        /* --- PAGE 13: ENDING CANVAS --- */
+        #star-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
+        .night-sky { background: #03041a !important; color: white; }
+
+        /* MUSIC CONTROLS */
+        .music-controls { position: fixed; bottom: 20px; right: 20px; z-index: 100; display: flex; gap: 10px; }
+        .music-btn { background: white; border: 1px solid #ddd; border-radius: 50%; width: 40px; height: 40px; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+    </style>
+</head>
+<body>
+
+    <div id="particle-container"></div>
+
+    <div class="music-controls">
+        <button class="music-btn" onclick="togglePlay('🎵')" title="Play Music">🎵</button>
+        <button class="music-btn" onclick="triggerNotes()" title="Love Notes">💌</button>
+    </div>
+
+    <!-- PAGE 1: GRAND OPENING -->
+    <div class="page active" id="page-1">
+        <h1 class="handwritten">A Special Delivery...</h1>
+        <div class="envelope-wrapper" onclick="openEnvelope()">
+            <div class="envelope">
+                <div class="envelope-flap" id="flap"></div>
+                <div class="wax-seal" id="seal">K</div>
+                <div class="letter" id="letter">
+                    <h2 class="handwritten">For Kirti ❤️</h2>
+                </div>
+            </div>
+        </div>
+        <p style="font-size: 0.9rem; color: #888; margin-top: 50px;">(Tap the envelope to open)</p>
+    </div>
+
+    <!-- PAGE 2: HOW WE MET -->
+    <div class="page" id="page-2">
+        <h1 class="handwritten typewriter" data-text="Chapter 1: How We Met"></h1>
+        <p class="typewriter" data-text="It all started with a simple hello... little did I know you'd become my whole world."></p>
+        <div style="font-size: 4rem;">🧑🏻‍💻 💬 👩🏻‍💼</div>
+        <button class="btn" onclick="nextPage()">Next Chapter</button>
+    </div>
+
+    <!-- PAGE 3: BEAUTIFUL GARDEN -->
+    <div class="page" id="page-3">
+        <h1 class="handwritten">The First Time You Smiled...</h1>
+        <p>The whole world bloomed.</p>
+        <div style="font-size: 3rem; text-align: center; letter-spacing: 10px;">
+            🌹 🌷 🌸 🌺 🌼 🌻 🌳 🦋 🐝
+        </div>
+        <p style="font-size: 0.9rem; color: gray;">(Tap anywhere to plant more flowers)</p>
+        <button class="btn" onclick="nextPage()">Next</button>
+    </div>
+
+    <!-- PAGE 4: SHY GIRL -->
+    <div class="page" id="page-4">
+        <h1 class="handwritten">At first, you were so shy...</h1>
+        <div style="font-size: 4rem;">🙈</div>
+        <p>It was quiet... until suddenly...</p>
+        <div id="chat-container" style="position: relative; width: 100%; height: 300px;"></div>
+        <button class="btn" id="shy-next" style="display:none;" onclick="nextPage()">Haha, Next</button>
+    </div>
+
+    <!-- PAGE 5: TED TALK -->
+    <div class="page stage" id="page-5">
+        <div class="curtain curtain-left" id="curtain-L"></div>
+        <div class="curtain curtain-right" id="curtain-R"></div>
+        <div class="spotlight" id="spotlight"></div>
+        <h1 class="handwritten" style="z-index: 12;">One word replies...<br>evolved into TEDx Kirti.</h1>
+        <div style="font-size: 5rem; z-index: 12;">🎤 👏 👏</div>
+        <button class="btn" style="z-index: 12; background: white; color: black;" onclick="nextPage()">Next</button>
+    </div>
+
+    <!-- PAGE 6: STUBBORNNESS -->
+    <div class="page" id="page-6">
+        <h1 class="handwritten">⚠️ Analyzing Personality...</h1>
+        <p>Calculating Level of "Professional Stubbornness"</p>
+        <div class="loading-container">
+            <div class="loading-bar" id="stubborn-bar"></div>
+        </div>
+        <h2 id="stubborn-text" style="opacity: 0; color: #c1121f;">99.999999% 😂</h2>
+        <button class="btn" id="stubborn-next" style="opacity: 0;" onclick="nextPage()">Next</button>
+    </div>
+
+    <!-- PAGE 7: SURRENDER -->
+    <div class="page" id="page-7">
+        <div style="font-size: 6rem; animation: floatUp 3s infinite alternate;">🏳️</div>
+        <h1 class="handwritten">Bhanu has officially surrendered.</h1>
+        <p>You always win the arguments anyway.</p>
+        <button class="btn" onclick="nextPage()">Next</button>
+    </div>
+
+    <!-- PAGE 8: SURPRISE BOXES -->
+    <div class="page" id="page-8">
+        <h1 class="handwritten">Things I Love About You</h1>
+        <p>Tap the gifts for a surprise!</p>
+        <div style="display: flex; gap: 20px; font-size: 3rem; flex-wrap: wrap; justify-content: center;">
+            <div style="cursor: pointer;" onclick="openBox(this, '🌹')">🎁</div>
+            <div style="cursor: pointer;" onclick="openBox(this, '🧸')">🎁</div>
+            <div style="cursor: pointer;" onclick="openBox(this, '🍫')">🎁</div>
+            <div style="cursor: pointer;" onclick="openBox(this, '❤️')">🎁</div>
+            <div style="cursor: pointer;" onclick="openBox(this, 'My Peace 🥰')">🎁</div>
+        </div>
+        <button class="btn" onclick="nextPage()">Next</button>
+    </div>
+
+    <!-- PAGE 9: TEDDY STORY -->
+    <div class="page" id="page-9">
+        <h1 class="handwritten">Psst... I have something for Kirti...</h1>
+        <div class="teddy-scene">
+            <div class="teddy-actor">🧸💐</div>
+        </div>
+        <button class="btn" style="margin-top: 80px;" onclick="nextPage()">Aww, Next</button>
+    </div>
+
+    <!-- PAGE 10: WISHES -->
+    <div class="page" id="page-10">
+        <h1 class="handwritten">Happy Birthday, Beautiful!</h1>
+        <p>May this year bring you as much happiness as you bring to my life.</p>
+        <div style="font-size: 4rem;">👩‍❤️‍👨 🌟</div>
+        <button class="btn" onclick="nextPage()">Time for Cake!</button>
+    </div>
+
+    <!-- PAGE 11: CAKE -->
+    <div class="page" id="page-11">
+        <h1 class="handwritten">Make a Wish, Kirti!</h1>
+        <p>(Tap the cake to blow out the candles)</p>
+        <div class="cake" id="bday-cake" onclick="blowCandles()">🎂</div>
+        <button class="btn" id="cake-next" style="display:none;" onclick="nextPage()">Next</button>
+    </div>
+
+    <!-- PAGE 12: CHOICES -->
+    <div class="page" id="page-12">
+        <h1 class="handwritten">Final Question...</h1>
+        <h2>Do you love Bhanu?</h2>
+        <div class="choices-container">
+            <button class="btn" onclick="nextPage()">YES</button>
+            <button class="btn" onclick="nextPage()">ABSOLUTELY YES</button>
+            <button class="btn" onclick="nextPage()">EXTREMELY YES</button>
+            <button class="btn" id="no-btn" style="background: gray;" onmouseover="shrinkNo()">No</button>
+        </div>
+    </div>
+
+    <!-- PAGE 13: ENDING -->
+    <div class="page" id="page-13">
+        <canvas id="star-canvas"></canvas>
+        <h1 class="handwritten" style="font-size: 4rem; z-index: 10; text-shadow: 0 0 10px white;" id="finale-text"></h1>
+        <p style="z-index: 10; color: #ffd166; font-size: 1.5rem;" id="finale-sub"></p>
+    </div>
+
+    <script>
+        let currentPage = 1;
+        const totalPages = 13;
+        
+        // --- NAVIGATION LOGIC ---
+        function nextPage() {
+            document.getElementById(`page-${currentPage}`).classList.remove('active');
+            currentPage++;
+            if(currentPage <= totalPages) {
+                const next = document.getElementById(`page-${currentPage}`);
+                next.classList.add('active');
+                triggerPageEvents(currentPage);
+            }
+        }
+
+        function triggerPageEvents(page) {
+            if(page === 3) startGarden();
+            if(page === 4) startShyGirl();
+            if(page === 5) startTedTalk();
+            if(page === 6) startStubborn();
+            if(page === 13) startFinale();
+            
+            // Typewriter reset
+            const twElements = document.querySelectorAll(`#page-${page} .typewriter`);
+            twElements.forEach(el => {
+                const text = el.getAttribute('data-text');
+                el.innerText = '';
+                typeWriter(el, text, 0);
+            });
+        }
+
+        // --- GLOBAL EFFECTS ---
+        setInterval(createPetal, 1000);
+        function createPetal() {
+            const colors = ['#ff4d6d', '#ff758f', '#ffb3c1', '#fff', '#f9dc5c'];
+            const petal = document.createElement('div');
+            petal.innerHTML = '🌸';
+            petal.className = 'petal';
+            petal.style.left = Math.random() * 100 + 'vw';
+            petal.style.color = colors[Math.floor(Math.random() * colors.length)];
+            petal.style.animationDuration = (Math.random() * 3 + 4) + 's';
+            document.getElementById('particle-container').appendChild(petal);
+            setTimeout(() => petal.remove(), 7000);
+        }
+
+        function triggerNotes() {
+            const notes = ["I miss you ❤️", "My favourite person", "My peace", "My smile", "My forever"];
+            const note = document.createElement('div');
+            note.className = 'floating-note';
+            note.innerText = notes[Math.floor(Math.random() * notes.length)];
+            note.style.left = Math.random() * 70 + 10 + 'vw';
+            note.style.top = Math.random() * 70 + 10 + 'vh';
+            document.body.appendChild(note);
+            setTimeout(() => note.remove(), 4000);
+        }
+
+        // --- PAGE SPECIFIC FUNCTIONS ---
+        function openEnvelope() {
+            document.getElementById('seal').style.opacity = '0';
+            document.getElementById('flap').style.transform = 'rotateX(180deg)';
+            document.getElementById('letter').style.transform = 'translateY(-100px)';
+            createPetal(); createPetal(); createPetal();
+            setTimeout(nextPage, 2000);
+        }
+
+        function typeWriter(element, text, i) {
+            if (i < text.length) {
+                element.innerHTML += text.charAt(i);
+                setTimeout(() => typeWriter(element, text, i + 1), 50);
+            }
+        }
+
+        function startGarden() {
+            document.body.addEventListener('click', (e) => {
+                if(currentPage !== 3) return;
+                const flower = document.createElement('div');
+                const flowers = ['🌹', '🌷', '🌸', '🌺', '🌼', '🦋'];
+                flower.innerText = flowers[Math.floor(Math.random() * flowers.length)];
+                flower.style.position = 'absolute';
+                flower.style.left = e.clientX + 'px';
+                flower.style.top = e.clientY + 'px';
+                flower.style.fontSize = '2rem';
+                flower.style.animation = 'popIn 0.5s forwards';
+                document.getElementById('page-3').appendChild(flower);
+            });
+        }
+
+        function startShyGirl() {
+            setTimeout(() => {
+                const msgs = ["So...", "Actually...", "Listen...", "One more thing...", "Wait!", "Bhanuuuu!"];
+                const container = document.getElementById('chat-container');
+                let count = 0;
+                const interval = setInterval(() => {
+                    if(count > 15) { clearInterval(interval); document.getElementById('shy-next').style.display = 'block'; return; }
+                    const bubble = document.createElement('div');
+                    bubble.className = 'chat-bubble';
+                    bubble.innerText = msgs[Math.floor(Math.random() * msgs.length)] + " 💬";
+                    bubble.style.left = Math.random() * 80 + '%';
+                    bubble.style.top = Math.random() * 80 + '%';
+                    container.appendChild(bubble);
+                    count++;
+                }, 300);
+            }, 2000);
+        }
+
+        function startTedTalk() {
+            setTimeout(() => {
+                document.getElementById('curtain-L').style.transform = 'scaleX(0)';
+                document.getElementById('curtain-R').style.transform = 'scaleX(0)';
+                document.getElementById('spotlight').style.opacity = '1';
+            }, 1000);
+        }
+
+        function startStubborn() {
+            setTimeout(() => {
+                document.getElementById('stubborn-bar').style.width = '99.99%';
+                setTimeout(() => {
+                    document.getElementById('stubborn-text').style.opacity = '1';
+                    document.getElementById('stubborn-next').style.opacity = '1';
+                }, 4000);
+            }, 500);
+        }
+
+        function openBox(element, emoji) {
+            element.innerText = emoji;
+            element.style.transform = 'scale(1.2)';
+            element.style.pointerEvents = 'none';
+        }
+
+        function blowCandles() {
+            const cake = document.getElementById('bday-cake');
+            cake.innerText = '🍰 (Yum!)';
+            for(let i=0; i<30; i++) {
+                setTimeout(() => {
+                    const fw = document.createElement('div');
+                    fw.innerText = '✨';
+                    fw.style.position = 'absolute';
+                    fw.style.left = 50 + (Math.random() * 40 - 20) + 'vw';
+                    fw.style.top = 50 + (Math.random() * 40 - 20) + 'vh';
+                    fw.style.fontSize = Math.random() * 2 + 1 + 'rem';
+                    document.getElementById('page-11').appendChild(fw);
+                    setTimeout(() => fw.remove(), 1000);
+                }, i * 100);
+            }
+            setTimeout(() => { document.getElementById('cake-next').style.display = 'block'; }, 2000);
+        }
+
+        let noScale = 1;
+        function shrinkNo() {
+            noScale -= 0.15;
+            if(noScale < 0) noScale = 0;
+            document.getElementById('no-btn').style.transform = `scale(${noScale})`;
+            if(noScale <= 0) document.getElementById('no-btn').style.display = 'none';
+        }
+
+        function startFinale() {
+            document.body.classList.add('night-sky');
+            const canvas = document.getElementById('star-canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            
+            // Draw random stars
+            for(let i=0; i<200; i++) {
+                ctx.fillStyle = 'white';
+                ctx.beginPath();
+                ctx.arc(Math.random() * canvas.width, Math.random() * canvas.height, Math.random() * 1.5, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            setTimeout(() => {
+                document.getElementById('finale-text').innerHTML = "❤️<br>KIRTI<br>❤️<br>BHANU";
+                document.getElementById('finale-sub').innerHTML = "✨ Forever Begins Here ✨";
+            }, 2000);
+        }
+        
+        // Mock audio toggler for user to hook up real audio later
+        let playing = false;
+        function togglePlay(icon) {
+            playing = !playing;
+            alert(playing ? "Music starts playing! (To add real music, add an <audio> tag in the HTML)" : "Music stopped.");
+        }
+    </script>
+</body>
+</html>
