@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>For Kirti ❤️ | A Disney-Style Interactive Story</title>
+    <title>Kirti's Birthday Fairytale | A Disney-Style Story by Bhanu ❤️</title>
     
     <!-- PREMIUM TYPOGRAPHY -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Playfair+Display:ital,wght@0,600;0,800;1,400&family=Plus+Jakarta+Sans:wght@300;400;600;700&family=Sacramento&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Playfair+Display:ital,wght@0,600;0,800;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;600;700&family=Sacramento&display=swap" rel="stylesheet">
 
     <style>
         /* ==========================================================================
@@ -16,15 +16,18 @@
            ========================================================================== */
         :root {
             --gold-primary: #d4af37;
-            --gold-glow: rgba(212, 175, 55, 0.4);
+            --gold-light: #f3e5ab;
+            --gold-glow: rgba(212, 175, 55, 0.5);
+            --rose-300: #ffb3c1;
             --rose-500: #ff4d6d;
             --rose-600: #c1121f;
             --rose-deep: #590d22;
-            --glass-bg: rgba(255, 255, 255, 0.18);
-            --glass-border: rgba(255, 255, 255, 0.35);
-            --glass-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+            --glass-bg: rgba(255, 255, 255, 0.12);
+            --glass-border: rgba(255, 255, 255, 0.28);
+            --glass-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
             --text-dark: #2b0938;
             --text-light: #fff0f5;
+            --bg-night: #0b0214;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; -webkit-tap-highlight-color: transparent; }
@@ -33,32 +36,39 @@
             width: 100%; height: 100%;
             overflow: hidden;
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background: #0d021a;
+            background: var(--bg-night);
             color: var(--text-light);
+            transition: background 1.5s ease;
         }
 
         /* --- AURORA ANIMATED BACKGROUND MESH --- */
         .aurora-bg {
             position: fixed; inset: 0; z-index: 0;
-            background: radial-gradient(circle at 20% 20%, #ff758f 0%, transparent 40%),
-                        radial-gradient(circle at 80% 80%, #7b2cbf 0%, transparent 45%),
-                        radial-gradient(circle at 50% 50%, #3a0ca3 0%, transparent 50%),
-                        radial-gradient(circle at 80% 20%, #ffb3c1 0%, transparent 35%);
-            filter: blur(60px); opacity: 0.85;
-            animation: auroraShift 18s ease-in-out infinite alternate;
+            background: 
+                radial-gradient(circle at 15% 20%, #ff758f 0%, transparent 45%),
+                radial-gradient(circle at 85% 80%, #7b2cbf 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, #3a0ca3 0%, transparent 55%),
+                radial-gradient(circle at 80% 15%, #ffb3c1 0%, transparent 40%);
+            filter: blur(60px); opacity: 0.75;
+            animation: auroraShift 20s ease-in-out infinite alternate;
+            transition: opacity 1.5s ease;
         }
 
         @keyframes auroraShift {
             0% { transform: scale(1) rotate(0deg); }
-            50% { transform: scale(1.15) rotate(5deg); }
-            100% { transform: scale(1.05) rotate(-5deg); }
+            50% { transform: scale(1.18) rotate(6deg); }
+            100% { transform: scale(1.05) rotate(-6deg); }
+        }
+
+        body.dark-emotional-mode .aurora-bg {
+            opacity: 0.15;
         }
 
         /* --- CANVAS LAYERS --- */
         canvas { position: fixed; inset: 0; pointer-events: none; }
+        #canvas-night { z-index: 1; }
         #canvas-particles { z-index: 2; }
         #canvas-fireworks { z-index: 3; }
-        #canvas-night { z-index: 1; }
 
         /* ==========================================================================
            2. GLASSMORPHISM & LAYOUT ARCHITECTURE
@@ -68,73 +78,92 @@
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             padding: 24px; text-align: center;
             opacity: 0; pointer-events: none;
-            transform: scale(0.92) filter(blur(10px));
-            transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: scale(0.92) translateY(20px);
+            filter: blur(8px);
+            transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+            overflow-y: auto;
         }
 
         .page.active {
             opacity: 1; pointer-events: auto;
-            transform: scale(1) filter(blur(0px));
+            transform: scale(1) translateY(0);
+            filter: blur(0px);
         }
 
         .glass-card {
             background: var(--glass-bg);
-            backdrop-filter: blur(20px) saturate(180%);
-            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            backdrop-filter: blur(25px) saturate(190%);
+            -webkit-backdrop-filter: blur(25px) saturate(190%);
             border: 1px solid var(--glass-border);
             box-shadow: var(--glass-shadow);
-            border-radius: 32px;
-            padding: 40px; max-width: 680px; width: 100%;
+            border-radius: 36px;
+            padding: 36px; max-width: 720px; width: 100%;
             position: relative; overflow: hidden;
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
         }
 
         .glass-card:hover {
             transform: translateY(-4px);
-            box-shadow: 0 30px 60px rgba(0,0,0,0.25), 0 0 30px rgba(255, 117, 143, 0.3);
+            box-shadow: 0 30px 70px rgba(0,0,0,0.4), 0 0 35px var(--gold-glow);
         }
 
         /* --- TYPOGRAPHY --- */
-        .font-title { font-family: 'Playfair Display', serif; font-weight: 800; background: linear-gradient(135deg, #fff, #ffb3c1, var(--gold-primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .font-cursive { font-family: 'Sacramento', cursive; font-size: 3.8rem; color: #ffe6ea; text-shadow: 0 0 20px rgba(255,117,143,0.6); }
+        .font-title { 
+            font-family: 'Playfair Display', serif; font-weight: 800; 
+            background: linear-gradient(135deg, #ffffff 0%, #ffb3c1 50%, var(--gold-primary) 100%); 
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; 
+            letter-spacing: -0.5px;
+        }
+        .font-cursive { 
+            font-family: 'Sacramento', cursive; font-size: 3.8rem; color: #ffe6ea; 
+            text-shadow: 0 0 25px rgba(255,117,143,0.7); 
+            line-height: 1.1;
+        }
         .font-serif { font-family: 'Cinzel', serif; letter-spacing: 2px; }
 
-        h1 { font-size: 3rem; margin-bottom: 12px; line-height: 1.2; }
-        h2 { font-size: 2.2rem; margin-bottom: 16px; }
-        p { font-size: 1.2rem; line-height: 1.7; opacity: 0.95; font-weight: 300; }
+        h1 { font-size: 2.8rem; margin-bottom: 14px; line-height: 1.2; }
+        h2 { font-size: 2rem; margin-bottom: 16px; font-weight: 600; }
+        p { font-size: 1.15rem; line-height: 1.7; opacity: 0.95; font-weight: 300; }
 
         /* --- LUXURY BUTTONS --- */
         .btn-glass {
-            background: linear-gradient(135deg, rgba(255, 77, 109, 0.8), rgba(193, 18, 31, 0.9));
-            color: #fff; border: 1px solid rgba(255,255,255,0.4);
+            background: linear-gradient(135deg, rgba(255, 77, 109, 0.85), rgba(193, 18, 31, 0.95));
+            color: #fff; border: 1px solid rgba(255,255,255,0.45);
             padding: 16px 36px; font-size: 1.1rem; font-weight: 600;
             border-radius: 50px; cursor: pointer;
-            box-shadow: 0 10px 25px rgba(255, 77, 109, 0.4), inset 0 1px 0 rgba(255,255,255,0.4);
+            box-shadow: 0 12px 30px rgba(255, 77, 109, 0.45), inset 0 1px 0 rgba(255,255,255,0.5);
             transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
             position: relative; overflow: hidden; margin-top: 24px;
             display: inline-flex; align-items: center; justify-content: center; gap: 10px;
         }
 
         .btn-glass:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 18px 35px rgba(255, 77, 109, 0.6), 0 0 20px var(--gold-glow);
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(255, 77, 109, 0.65), 0 0 25px var(--gold-glow);
         }
 
         .btn-glass:active { transform: translateY(1px) scale(0.98); }
 
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
         /* ==========================================================================
-           3. AUDIO TOOLBAR & FLOATING HUD
+           3. HUD TOOLBAR & AUDIO CONTROL
            ========================================================================== */
         .hud-toolbar {
-            position: fixed; top: 24px; right: 24px; z-index: 100;
-            display: flex; align-items: center; gap: 12px;
-            background: rgba(15, 5, 29, 0.6); backdrop-filter: blur(15px);
-            border: 1px solid rgba(255,255,255,0.2); border-radius: 40px; padding: 8px 16px;
+            position: fixed; top: 20px; right: 20px; z-index: 100;
+            display: flex; align-items: center; gap: 10px;
+            background: rgba(15, 5, 29, 0.65); backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.25); border-radius: 40px; padding: 6px 14px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
 
         .hud-btn {
-            background: none; border: none; color: white; font-size: 1.3rem;
-            cursor: pointer; width: 40px; height: 40px; border-radius: 50%;
+            background: none; border: none; color: white; font-size: 1.2rem;
+            cursor: pointer; width: 38px; height: 38px; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
             transition: background 0.2s, transform 0.2s;
         }
@@ -142,44 +171,42 @@
         .hud-btn:hover { background: rgba(255,255,255,0.2); transform: scale(1.1); }
 
         select.hud-select {
-            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.3);
             color: white; padding: 6px 12px; border-radius: 20px; font-size: 0.85rem; outline: none;
+            cursor: pointer;
+        }
+
+        select.hud-select option { background: #1a0826; color: white; }
+
+        .signature-tag {
+            position: fixed; bottom: 20px; left: 20px; z-index: 100;
+            font-family: 'Sacramento', cursive; font-size: 1.8rem; color: var(--gold-primary);
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.5); pointer-events: none;
         }
 
         /* ==========================================================================
-           4. SPECIFIC CHAPTER COMPONENT STYLES
+           4. CHAPTER COMPONENT SPECIFIC STYLES
            ========================================================================== */
-        /* --- CH 1: REALISTIC 3D ENVELOPE --- */
+        /* --- CH 1: ENVELOPE --- */
         .envelope-wrapper {
-            perspective: 1000px; width: 320px; height: 220px; cursor: pointer; margin: 20px auto;
+            perspective: 1000px; width: 320px; height: 220px; cursor: pointer; margin: 25px auto;
         }
-
-        .envelope-3d {
-            width: 100%; height: 100%; position: relative;
-            transform-style: preserve-3d; transition: transform 0.8s;
-        }
-
-        .env-face {
-            position: absolute; inset: 0; border-radius: 16px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
-        }
-
+        .envelope-3d { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.8s; }
+        .env-face { position: absolute; inset: 0; border-radius: 16px; box-shadow: 0 15px 35px rgba(0,0,0,0.4); }
         .env-back { background: #ff758f; }
         .env-flap {
-            position: absolute; top: 0; left: 0; right: 0; height: 110px;
+            position: absolute; top: 0; left: 0; right: 0; height: 115px;
             background: #ff4d6d; clip-path: polygon(0 0, 100% 0, 50% 100%);
             transform-origin: top; transition: transform 0.8s ease-in-out; z-index: 5;
         }
-
         .env-seal {
-            position: absolute; top: 80px; left: 50%; transform: translateX(-50%);
-            width: 54px; height: 54px; background: radial-gradient(circle, #800f2f, #4a0e17);
+            position: absolute; top: 82px; left: 50%; transform: translateX(-50%);
+            width: 56px; height: 56px; background: radial-gradient(circle, #800f2f, #4a0e17);
             border: 2px solid var(--gold-primary); border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
             font-family: 'Cinzel', serif; font-weight: bold; color: var(--gold-primary);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5); z-index: 6; transition: opacity 0.4s, transform 0.4s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5); z-index: 6; transition: all 0.4s;
         }
-
         .env-letter {
             position: absolute; inset: 12px; background: #fff8f0; color: #4a0e17;
             border-radius: 12px; padding: 20px; text-align: center;
@@ -187,105 +214,134 @@
             z-index: 3; box-shadow: 0 -5px 15px rgba(0,0,0,0.1);
         }
 
-        /* --- CH 3: GARDEN INTERACTIVE elements --- */
-        .garden-container {
-            display: flex; flex-wrap: wrap; justify-content: center; gap: 16px;
-            margin: 20px 0; max-height: 220px; overflow-y: auto; padding: 10px;
+        /* --- CH 2: GARDEN --- */
+        .garden-bed {
+            display: flex; flex-wrap: wrap; justify-content: center; gap: 14px;
+            margin: 20px 0; max-height: 240px; overflow-y: auto; padding: 12px;
+            background: rgba(0,0,0,0.15); border-radius: 24px; border: 1px solid rgba(255,255,255,0.1);
         }
-
         .flower-node {
             font-size: 2.8rem; cursor: pointer; transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.2));
+            filter: drop-shadow(0 5px 12px rgba(0,0,0,0.3));
+            animation: flowerSway 3s ease-in-out infinite alternate;
+        }
+        .flower-node:hover { transform: scale(1.45) rotate(12deg); }
+        @keyframes flowerSway { 0% { transform: rotate(-4deg); } 100% { transform: rotate(4deg); } }
+
+        /* --- CH 3: TEDDY ANIMATION --- */
+        .teddy-stage {
+            position: relative; width: 100%; height: 160px; margin: 20px 0;
+            background: rgba(0,0,0,0.2); border-radius: 24px; overflow: hidden;
+            border-bottom: 3px solid var(--gold-primary);
+        }
+        .teddy-actor {
+            font-size: 4rem; position: absolute; bottom: 10px; left: -80px;
+            transition: left 0.1s linear, transform 0.3s;
         }
 
-        .flower-node:hover { transform: scale(1.4) rotate(10deg); }
-
-        /* --- CH 4: SHY GIRL CHAT FLOOD --- */
-        .chat-stream { position: relative; width: 100%; height: 280px; overflow: hidden; margin-top: 15px; }
-        .chat-bubble {
-            position: absolute; background: rgba(255, 255, 255, 0.95); color: #2b0938;
-            padding: 10px 18px; border-radius: 20px; font-weight: 600; font-size: 1rem;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15); opacity: 0; transform: scale(0.3);
-            animation: popBubble 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        /* --- CH 4: STUBBORNNESS SCANNER --- */
+        .scanner-container {
+            width: 100%; height: 28px; background: rgba(0,0,0,0.4); border: 2px solid var(--gold-primary);
+            border-radius: 20px; padding: 3px; margin: 20px 0; overflow: hidden;
         }
-
-        @keyframes popBubble { to { opacity: 1; transform: scale(1); } }
+        .scanner-fill {
+            width: 0%; height: 100%; background: linear-gradient(90deg, #ff4d6d, var(--gold-primary));
+            border-radius: 15px; transition: width 3.5s cubic-bezier(0.1, 0, 0.2, 1);
+        }
 
         /* --- CH 5: TED TALK STAGE --- */
-        .stage-curtain-left, .stage-curtain-right {
+        .stage-curtain-l, .stage-curtain-r {
             position: absolute; top: 0; bottom: 0; width: 50%; background: #590d22;
             z-index: 15; transition: transform 1.8s cubic-bezier(0.77, 0, 0.175, 1);
             border-bottom: 8px solid var(--gold-primary);
         }
-        .stage-curtain-left { left: 0; transform-origin: left; }
-        .stage-curtain-right { right: 0; transform-origin: right; }
-
+        .stage-curtain-l { left: 0; transform-origin: left; }
+        .stage-curtain-r { right: 0; transform-origin: right; }
         .spotlight-beam {
             position: absolute; top: -100px; left: 50%; transform: translateX(-50%);
             width: 350px; height: 600px;
-            background: radial-gradient(ellipse at top, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 70%);
+            background: radial-gradient(ellipse at top, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0) 70%);
             opacity: 0; transition: opacity 1.5s; pointer-events: none; z-index: 12;
         }
 
-        /* --- CH 6: PERSONALITY SCANNER --- */
-        .scanner-bar-container {
-            width: 100%; height: 28px; background: rgba(0,0,0,0.4); border: 2px solid var(--gold-primary);
-            border-radius: 20px; padding: 3px; margin: 20px 0; overflow: hidden;
+        /* --- CH 9: FLIP CARDS --- */
+        .cards-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 14px;
+            margin: 20px 0; max-height: 280px; overflow-y: auto; padding: 6px;
         }
-        .scanner-bar-fill {
-            width: 0%; height: 100%; background: linear-gradient(90deg, #ff4d6d, var(--gold-primary));
-            border-radius: 15px; transition: width 4s cubic-bezier(0.1, 0, 0.2, 1);
+        .flip-card {
+            height: 100px; perspective: 1000px; cursor: pointer;
+        }
+        .flip-card-inner {
+            position: relative; width: 100%; height: 100%; text-align: center;
+            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+        }
+        .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
+        .card-front, .card-back {
+            position: absolute; width: 100%; height: 100%; backface-visibility: hidden;
+            border-radius: 20px; display: flex; align-items: center; justify-content: center;
+            padding: 10px; font-weight: 600; box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            border: 1px solid var(--glass-border);
+        }
+        .card-front { background: rgba(255,255,255,0.18); font-size: 2rem; }
+        .card-back { background: linear-gradient(135deg, #ff4d6d, #800f2f); color: white; transform: rotateY(180deg); font-size: 0.95rem; }
+
+        /* --- CH 10: MINI GAMES --- */
+        .game-stage {
+            position: relative; width: 100%; height: 220px; background: rgba(0,0,0,0.25);
+            border-radius: 24px; border: 1px solid var(--glass-border); overflow: hidden; margin: 15px 0;
+        }
+        .game-heart-target {
+            position: absolute; font-size: 2.5rem; cursor: pointer;
+            transition: transform 0.2s, top 0.4s, left 0.4s;
+            filter: drop-shadow(0 4px 10px rgba(255,77,109,0.5));
         }
 
-        /* --- CH 9: ANIMATED TEDDY CANVAS / SVG --- */
-        .teddy-stage {
-            position: relative; width: 300px; height: 180px; margin: 20px auto;
-            border-bottom: 2px solid rgba(255,255,255,0.2);
-        }
-        .teddy-character {
-            font-size: 4.5rem; position: absolute; bottom: 0; left: -60px;
-            transition: left 0.1s linear;
-        }
-
-        /* --- CH 11: SVG INTERACTIVE BIRTHDAY CAKE --- */
-        .cake-svg-wrapper {
-            width: 220px; height: 220px; margin: 20px auto; cursor: pointer;
-            filter: drop-shadow(0 15px 25px rgba(0,0,0,0.4));
+        /* --- CH 11: SVG 3D CAKE --- */
+        .cake-wrapper {
+            width: 210px; height: 210px; margin: 15px auto; cursor: pointer;
+            filter: drop-shadow(0 15px 30px rgba(0,0,0,0.5));
             transition: transform 0.3s;
         }
-
-        .cake-svg-wrapper:hover { transform: scale(1.06); }
-
+        .cake-wrapper:hover { transform: scale(1.08); }
         .flame {
-            animation: flameFlicker 0.6s infinite alternate ease-in-out;
+            animation: flameFlicker 0.5s infinite alternate ease-in-out;
             transform-origin: center bottom;
         }
-
         @keyframes flameFlicker {
-            0% { transform: scale(1) rotate(-2deg); opacity: 1; }
-            100% { transform: scale(1.15) rotate(3deg); opacity: 0.85; }
+            0% { transform: scale(1) rotate(-3deg); opacity: 1; }
+            100% { transform: scale(1.2) rotate(4deg); opacity: 0.85; }
         }
 
-        /* --- CH 12: YES / NO RUNAWAY GAME --- */
-        .choice-box {
-            display: flex; flex-direction: column; gap: 14px; align-items: center; margin-top: 20px;
-            position: relative; min-height: 220px; width: 100%;
+        /* --- CH 13: SECRET LETTERS --- */
+        .letters-grid { display: flex; gap: 14px; justify-content: center; margin: 20px 0; flex-wrap: wrap; }
+        .secret-env {
+            width: 90px; height: 65px; background: var(--rose-500); border-radius: 12px;
+            display: flex; align-items: center; justify-content: center; font-size: 1.8rem;
+            cursor: pointer; border: 1px solid var(--gold-primary); box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+            transition: transform 0.3s;
         }
+        .secret-env:hover { transform: translateY(-50px) scale(1.1); }
 
+        /* --- RUNAWAY NO BUTTON GAME --- */
+        .runaway-box {
+            display: flex; flex-direction: column; gap: 12px; align-items: center; margin-top: 15px;
+            position: relative; min-height: 180px; width: 100%;
+        }
         #btn-no-runaway {
-            position: absolute; background: rgba(108, 117, 125, 0.8);
+            position: absolute; background: rgba(108, 117, 125, 0.85);
             transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        /* --- FLOATING LOVE NOTE TOAST --- */
-        .floating-note-toast {
+        /* --- FLOATING TOASTS --- */
+        .floating-toast {
             position: fixed; z-index: 150; background: rgba(255, 255, 255, 0.95); color: var(--rose-deep);
-            padding: 14px 28px; border-radius: 30px; font-family: 'Sacramento', cursive; font-size: 2.2rem;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.25); border: 1px solid var(--gold-primary);
-            pointer-events: none; animation: floatNoteUp 4.5s ease-out forwards;
+            padding: 12px 26px; border-radius: 30px; font-family: 'Sacramento', cursive; font-size: 2.2rem;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3); border: 1px solid var(--gold-primary);
+            pointer-events: none; animation: floatToastUp 4.5s ease-out forwards;
         }
-
-        @keyframes floatNoteUp {
+        @keyframes floatToastUp {
             0% { opacity: 0; transform: translateY(30px) scale(0.8); }
             15% { opacity: 1; transform: translateY(0) scale(1); }
             80% { opacity: 1; }
@@ -296,7 +352,7 @@
 <body>
 
     <!-- AURORA MESH BACKGROUND -->
-    <div class="aurora-bg"></div>
+    <div class="aurora-bg" id="aurora-bg"></div>
 
     <!-- CANVAS LAYERS -->
     <canvas id="canvas-night"></canvas>
@@ -310,21 +366,24 @@
             <option value="piano">🎹 Soft Piano</option>
             <option value="violin">🎻 Romantic Violin</option>
             <option value="rain">🌧️ Rain Ambience</option>
-            <option value="birds">🕊️ Birds Garden</option>
-            <option value="bday">🎂 Happy Birthday Synth</option>
+            <option value="birds">🕊️ Garden Birds</option>
+            <option value="bday">🎂 Birthday Synth</option>
         </select>
-        <button class="hud-btn" onclick="spawnLoveNote()" title="Send Love Note">💌</button>
+        <button class="hud-btn" onclick="spawnLoveToast()" title="Send Love Note">💌</button>
     </div>
 
+    <!-- SIGNATURE -->
+    <div class="signature-tag">Made with ❤️ by Bhanu</div>
+
     <!-- ==========================================================================
-       STORY CHAPTER PAGES (1 - 13)
+       CHAPTER PAGES (1 - 15)
        ========================================================================== -->
 
-    <!-- PAGE 1: GRAND OPENING ENVELOPE -->
+    <!-- PAGE 1: LUXURY OPENING ENVELOPE -->
     <div class="page active" id="page-1">
         <div class="glass-card">
-            <h1 class="font-cursive">For Kirti ❤️</h1>
-            <p class="font-serif" style="color: var(--gold-primary);">A Magical Story Awaits You</p>
+            <h1 class="font-cursive">Kirti's Fairytale</h1>
+            <p class="font-serif" style="color: var(--gold-primary); margin-bottom: 10px;">An Interactive Story Created Just For You</p>
             <div class="envelope-wrapper" onclick="openEnvelope()">
                 <div class="envelope-3d" id="env-3d">
                     <div class="env-face env-back"></div>
@@ -332,178 +391,235 @@
                     <div class="env-seal" id="env-seal">K</div>
                     <div class="env-letter" id="env-letter">
                         <h2 class="font-cursive" style="color: #590d22;">For Kirti ❤️</h2>
-                        <p style="font-size: 0.9rem; color: #800f2f;">Tap seal to break & open...</p>
+                        <p style="font-size: 0.9rem; color: #800f2f;">Tap wax seal to unseal...</p>
                     </div>
                 </div>
             </div>
-            <p style="font-size: 0.9rem; opacity: 0.7;">(Tap the envelope to open with sound)</p>
+            <p style="font-size: 0.85rem; opacity: 0.7;">(Tap envelope to break seal & open story)</p>
         </div>
     </div>
 
-    <!-- PAGE 2: HOW WE MET -->
+    <!-- PAGE 2: CHAPTER 1 - DESTINY -->
     <div class="page" id="page-2">
         <div class="glass-card">
-            <h1 class="font-title">Chapter 1: How We Met</h1>
-            <p id="typewriter-p2" style="min-height: 80px; font-size: 1.3rem;"></p>
-            <div style="font-size: 4.5rem; margin: 20px 0;">🧑🏻‍💻 💖 👩🏻‍💼</div>
-            <button class="btn-glass" onclick="goToPage(3)">Continue Story ✨</button>
+            <p class="font-serif" style="color: var(--gold-primary);">Chapter 1</p>
+            <h1 class="font-title">Destiny</h1>
+            <p id="typewriter-ch1" style="min-height: 80px; font-size: 1.3rem; margin: 15px 0;"></p>
+            <div style="font-size: 4.5rem; margin: 15px 0;">📖 ✨ 💖</div>
+            <button class="btn-glass" onclick="goToPage(3)">Enter The Rose Garden 🌹</button>
         </div>
     </div>
 
-    <!-- PAGE 3: BEAUTIFUL ROSE GARDEN -->
+    <!-- PAGE 3: CHAPTER 2 - THE MAGICAL GARDEN -->
     <div class="page" id="page-3">
         <div class="glass-card">
+            <p class="font-serif" style="color: var(--gold-primary);">Chapter 2</p>
             <h1 class="font-title">The Flower Garden</h1>
-            <p>You didn't just smile—you made my entire world bloom with roses, tulips, and cherry blossoms.</p>
-            <div class="garden-container" id="garden-bed">
-                <!-- Garden nodes populated dynamically -->
-            </div>
-            <p style="font-size: 0.85rem; color: var(--gold-primary);">(Tap any flower to bloom particles!)</p>
-            <button class="btn-glass" onclick="goToPage(4)">Next Chapter ✨</button>
+            <p>You didn't just smile... you made my entire world bloom with roses, tulips, and cherry blossoms.</p>
+            <div class="garden-bed" id="garden-bed"></div>
+            <p style="font-size: 0.85rem; color: var(--gold-primary);">(Tap any flower to bloom floating petals!)</p>
+            <button class="btn-glass" onclick="goToPage(4)">Meet Teddy 🧸</button>
         </div>
     </div>
 
-    <!-- PAGE 4: SHY GIRL -->
+    <!-- PAGE 4: CHAPTER 3 - TEDDY STORY -->
     <div class="page" id="page-4">
         <div class="glass-card">
-            <h1 class="font-title">At First, You Were Shy...</h1>
-            <p>Quiet, calm, hiding like a sweet little emoji...</p>
-            <div style="font-size: 5rem;" id="shy-girl-emoji">🙈</div>
-            <div class="chat-stream" id="chat-stream-box"></div>
-            <button class="btn-glass" id="btn-p4-next" style="display:none;" onclick="goToPage(5)">Haha, What Happened Next? 😂</button>
+            <p class="font-serif" style="color: var(--gold-primary);">Chapter 3</p>
+            <h1 class="font-title">A Special Delivery</h1>
+            <p id="teddy-dialogue">"Hi Kirti... Someone loves you very, very much!"</p>
+            <div class="teddy-stage">
+                <div class="teddy-actor" id="teddy-actor">🧸💐</div>
+            </div>
+            <button class="btn-glass" onclick="goToPage(5)">Continue Story ✨</button>
         </div>
     </div>
 
-    <!-- PAGE 5: TED TALK SECTION -->
+    <!-- PAGE 5: CHAPTER 4 - PROFESSIONALLY STUBBORN -->
     <div class="page" id="page-5">
-        <div class="stage-curtain-left" id="curtain-l"></div>
-        <div class="stage-curtain-right" id="curtain-r"></div>
+        <div class="glass-card">
+            <p class="font-serif" style="color: var(--gold-primary);">Chapter 4</p>
+            <h1 class="font-title">⚠️ System Scan</h1>
+            <p>Scanning Kirti's attitude & stubbornness level...</p>
+            <div class="scanner-container">
+                <div class="scanner-fill" id="scan-fill"></div>
+            </div>
+            <div id="scan-result" style="opacity: 0; transition: opacity 0.8s;">
+                <h2 style="color: #ff758f; text-shadow: 0 0 15px red;">Stubbornness: 99.999999% 😂</h2>
+                <p style="color: #fff;">ERROR: Cannot Reduce. Developer also gave up! 😂</p>
+            </div>
+            <button class="btn-glass" id="btn-p5-next" style="opacity:0;" onclick="goToPage(6)">Attend TED Talk 🎤</button>
+        </div>
+    </div>
+
+    <!-- PAGE 6: CHAPTER 5 - TED TALK -->
+    <div class="page" id="page-6">
+        <div class="stage-curtain-l" id="curtain-l"></div>
+        <div class="stage-curtain-r" id="curtain-r"></div>
         <div class="spotlight-beam" id="spotlight"></div>
         <div class="glass-card" style="z-index: 20;">
-            <h1 class="font-title" style="color: var(--gold-primary);">The Evolution</h1>
-            <h2>"One word replies evolved into TEDx Kirti." 😂</h2>
-            <div style="font-size: 4.5rem; margin: 15px 0;">🎤 👏 👏 👏</div>
-            <p style="font-size: 1rem; color: #ffb3c1;">Duration: 2 Hours 47 Minutes 😂</p>
-            <button class="btn-glass" onclick="goToPage(6)">Analyze Kirti's Personality 🔍</button>
+            <p class="font-serif" style="color: var(--gold-primary);">Chapter 5</p>
+            <h1 class="font-title">TEDx Kirti</h1>
+            <p>Speaker: <strong>Kirti</strong> | Topic: <em>"I'll just say one thing..."</em></p>
+            <div style="font-size: 4rem; margin: 15px 0;">🎤 👏 👏 📸</div>
+            <p style="font-size: 1rem; color: #ffb3c1;">Duration: 2 Hours 47 Minutes 😂😂😂</p>
+            <button class="btn-glass" onclick="goToPage(7)">That Quiet Moment... 💖</button>
         </div>
     </div>
 
-    <!-- PAGE 6: PROFESSIONAL STUBBORNNESS -->
-    <div class="page" id="page-6">
-        <div class="glass-card">
-            <h1 class="font-title">⚠️ Personality Scan</h1>
-            <p>Calculating Level of "Professional Stubbornness"...</p>
-            <div class="scanner-bar-container">
-                <div class="scanner-bar-fill" id="scan-fill"></div>
-            </div>
-            <h2 id="scan-result" style="opacity: 0; color: #ff758f; text-shadow: 0 0 10px red;">
-                99.999999999% Certified Stubborn! 😂<br>
-                <span style="font-size: 1rem; color: #fff;">ERROR: Cannot reduce. Developer resigned.</span>
-            </h2>
-            <button class="btn-glass" id="btn-p6-next" style="opacity: 0;" onclick="goToPage(7)">Proceed to Verdict ⚖️</button>
-        </div>
-    </div>
-
-    <!-- PAGE 7: SURRENDER -->
+    <!-- PAGE 7: CHAPTER 6 - THAT LOOK (EMOTIONAL DARK MODE) -->
     <div class="page" id="page-7">
-        <div class="glass-card">
-            <div style="font-size: 6rem; animation: floatNoteUp 3s infinite alternate;">🏳️</div>
-            <h1 class="font-title">Official Surrender</h1>
-            <h2 style="color: var(--gold-primary);">"Bhanu has officially surrendered."</h2>
-            <p>Because no matter what the argument is... you win anyway! ❤️</p>
-            <button class="btn-glass" onclick="goToPage(8)">Open Surprise Boxes 🎁</button>
+        <div class="glass-card" style="background: rgba(0, 0, 0, 0.45); border-color: rgba(212, 175, 55, 0.4);">
+            <p class="font-serif" style="color: var(--gold-primary);">Chapter 6</p>
+            <h1 class="font-title">That Look</h1>
+            <p id="look-text-1" style="font-size: 1.4rem; margin: 20px 0; min-height: 40px;"></p>
+            <p id="look-text-2" class="font-cursive" style="font-size: 3rem; color: var(--gold-light); min-height: 60px;"></p>
+            <button class="btn-glass" onclick="goToPage(8)">Argument Simulator ⚖️</button>
         </div>
     </div>
 
-    <!-- PAGE 8: SURPRISE BOXES -->
+    <!-- PAGE 8: CHAPTER 7 - ARGUMENT SIMULATOR -->
     <div class="page" id="page-8">
         <div class="glass-card">
-            <h1 class="font-title">Things I Love About You</h1>
-            <p>Tap each gift box to reveal a secret!</p>
-            <div style="display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin: 20px 0;">
-                <button class="btn-glass" style="padding: 16px; font-size: 2.2rem;" onclick="revealSurprise(this, '🌹 You make every single day feel magical.')">🎁</button>
-                <button class="btn-glass" style="padding: 16px; font-size: 2.2rem;" onclick="revealSurprise(this, '🧸 Your hugs are my favorite place on Earth.')">🎁</button>
-                <button class="btn-glass" style="padding: 16px; font-size: 2.2rem;" onclick="revealSurprise(this, '🍫 Your cute laugh clears away all my stress.')">🎁</button>
-                <button class="btn-glass" style="padding: 16px; font-size: 2.2rem;" onclick="revealSurprise(this, '❤️ Your kind, compassionate heart.')">🎁</button>
-                <button class="btn-glass" style="padding: 16px; font-size: 2.2rem;" onclick="revealSurprise(this, '🥰 You are my ultimate peace.')">🎁</button>
+            <p class="font-serif" style="color: var(--gold-primary);">Chapter 7</p>
+            <h1 class="font-title">Who Is Always Right?</h1>
+            <p>Please select the correct answer to proceed:</p>
+            <div style="display: flex; flex-direction: column; gap: 14px; margin: 20px 0; align-items: center;">
+                <button class="btn-glass btn-secondary" style="width: 260px;" onclick="selectArgumentAnswer('bhanu')">⭕ Bhanu</button>
+                <button class="btn-glass" style="width: 260px;" onclick="selectArgumentAnswer('kirti')">⭕ Kirti</button>
             </div>
-            <p class="font-cursive" id="surprise-text-output" style="font-size: 2.2rem; color: var(--gold-primary); min-height: 60px;"></p>
-            <button class="btn-glass" onclick="goToPage(9)">Watch Teddy's Journey 🧸</button>
+            <div id="argument-result" style="min-height: 60px;"></div>
+            <button class="btn-glass" id="btn-p8-next" style="display:none;" onclick="goToPage(9)">Check Love Meter 💓</button>
         </div>
     </div>
 
-    <!-- PAGE 9: TEDDY STORY -->
+    <!-- PAGE 9: CHAPTER 8 - LOVE METER -->
     <div class="page" id="page-9">
         <div class="glass-card">
-            <h1 class="font-title">Teddy Has Something For You...</h1>
-            <p id="teddy-speech">"Psst... I have flowers for Kirti!"</p>
-            <div class="teddy-stage">
-                <div class="teddy-character" id="teddy-actor">🧸💐</div>
+            <p class="font-serif" style="color: var(--gold-primary);">Chapter 8</p>
+            <h1 class="font-title">Compatibility Scanner</h1>
+            <div style="margin: 20px 0; text-align: left; max-width: 400px; margin-left: auto; margin-right: auto;">
+                <p>Compatibility: <strong style="color:var(--gold-primary);">100%</strong></p>
+                <p>Trust: <strong style="color:var(--gold-primary);">100%</strong></p>
+                <p>Respect: <strong style="color:var(--gold-primary);">100%</strong></p>
+                <p>Love: <strong style="font-size: 1.8rem; color:var(--rose-500);">∞ (Infinite)</strong></p>
             </div>
-            <button class="btn-glass" onclick="goToPage(10)">Aww, Continue! ❤️</button>
+            <button class="btn-glass" onclick="goToPage(10)">Things I Love About You 💌</button>
         </div>
     </div>
 
-    <!-- PAGE 10: BIRTHDAY WISHES -->
+    <!-- PAGE 10: CHAPTER 9 - THINGS I LOVE ABOUT YOU -->
     <div class="page" id="page-10">
         <div class="glass-card">
-            <h1 class="font-cursive" style="font-size: 4.5rem;">Happy Birthday, Kirti!</h1>
-            <p style="font-size: 1.3rem;">You bring so much light, warmth, and laughter into my life. May your special day be filled with endless magic, sweetness, and love.</p>
-            <div style="font-size: 4rem; margin: 15px 0;">👩‍❤️‍👨 🌟 💖</div>
-            <button class="btn-glass" onclick="goToPage(11)">Time for Birthday Cake! 🎂</button>
+            <p class="font-serif" style="color: var(--gold-primary);">Chapter 9</p>
+            <h1 class="font-title">Things I Love About You</h1>
+            <p>(Tap each card to flip!)</p>
+            <div class="cards-grid">
+                <div class="flip-card" onclick="this.classList.toggle('flipped'); AudioEngine.playPop();">
+                    <div class="flip-card-inner"><div class="card-front">😊</div><div class="card-back">Your Smile</div></div>
+                </div>
+                <div class="flip-card" onclick="this.classList.toggle('flipped'); AudioEngine.playPop();">
+                    <div class="flip-card-inner"><div class="card-front">💖</div><div class="card-back">Your Kindness</div></div>
+                </div>
+                <div class="flip-card" onclick="this.classList.toggle('flipped'); AudioEngine.playPop();">
+                    <div class="flip-card-inner"><div class="card-front">🌸</div><div class="card-back">Your Simplicity</div></div>
+                </div>
+                <div class="flip-card" onclick="this.classList.toggle('flipped'); AudioEngine.playPop();">
+                    <div class="flip-card-inner"><div class="card-front">✨</div><div class="card-back">Your Eyes</div></div>
+                </div>
+                <div class="flip-card" onclick="this.classList.toggle('flipped'); AudioEngine.playPop();">
+                    <div class="flip-card-inner"><div class="card-front">😂</div><div class="card-back">Your Laugh</div></div>
+                </div>
+                <div class="flip-card" onclick="this.classList.toggle('flipped'); AudioEngine.playPop();">
+                    <div class="flip-card-inner"><div class="card-front">🥰</div><div class="card-back">Your Caring Nature</div></div>
+                </div>
+                <div class="flip-card" onclick="this.classList.toggle('flipped'); AudioEngine.playPop();">
+                    <div class="flip-card-inner"><div class="card-front">😜</div><div class="card-back">Your Stubbornness</div></div>
+                </div>
+                <div class="flip-card" onclick="this.classList.toggle('flipped'); AudioEngine.playPop();">
+                    <div class="flip-card-inner"><div class="card-front">❤️</div><div class="card-back">Everything.</div></div>
+                </div>
+            </div>
+            <button class="btn-glass" onclick="goToPage(11)">Play Funny Games 🎮</button>
         </div>
     </div>
 
-    <!-- PAGE 11: INTERACTIVE SVG CAKE -->
+    <!-- PAGE 11: CHAPTER 10 - FUNNY MINI GAMES -->
     <div class="page" id="page-11">
         <div class="glass-card">
-            <h1 class="font-title">Make a Birthday Wish!</h1>
-            <p>(Tap the cake to blow out the candles!)</p>
-            <div class="cake-svg-wrapper" id="cake-container" onclick="blowOutCandles()">
+            <p class="font-serif" style="color: var(--gold-primary);">Chapter 10</p>
+            <h1 class="font-title">Catch My Heart!</h1>
+            <p>Score: <span id="game-score" style="color:var(--gold-primary); font-weight:bold;">0</span> / 5</p>
+            <div class="game-stage" id="game-stage">
+                <div class="game-heart-target" id="target-heart" onclick="catchHeart()">💖</div>
+            </div>
+            <p class="font-cursive" id="game-message" style="font-size: 2rem; color: var(--gold-primary); min-height: 40px;"></p>
+            <button class="btn-glass" id="btn-p11-next" style="display:none;" onclick="goToPage(12)">Time for Cake! 🎂</button>
+        </div>
+    </div>
+
+    <!-- PAGE 12: CHAPTER 11 - BIRTHDAY CAKE -->
+    <div class="page" id="page-12">
+        <div class="glass-card">
+            <p class="font-serif" style="color: var(--gold-primary);">Chapter 11</p>
+            <h1 class="font-cursive" style="font-size: 4rem;">Happy Birthday, Kirti!</h1>
+            <p>(Tap the cake to blow out the candles & make a wish!)</p>
+            <div class="cake-wrapper" onclick="blowOutCandles()">
                 <svg viewBox="0 0 200 200" width="100%" height="100%">
-                    <!-- Cake Base Plate -->
                     <ellipse cx="100" cy="170" rx="80" ry="15" fill="#d4af37" opacity="0.6"/>
-                    <!-- Bottom Layer -->
                     <rect x="35" y="110" width="130" height="50" rx="10" fill="#ff758f"/>
                     <path d="M 35 125 Q 50 135 65 125 Q 80 135 95 125 Q 110 135 125 125 Q 140 135 165 125 L 165 110 L 35 110 Z" fill="#fff0f5"/>
-                    <!-- Top Layer -->
                     <rect x="55" y="70" width="90" height="40" rx="8" fill="#ff4d6d"/>
                     <path d="M 55 82 Q 70 90 85 82 Q 100 90 115 82 Q 130 90 145 82 L 145 70 L 55 70 Z" fill="#fff0f5"/>
-                    <!-- Candle 1 -->
                     <rect x="75" y="45" width="8" height="25" fill="#ffe6ea"/>
                     <polygon class="flame" id="flame-1" points="79,30 74,43 84,43" fill="#ffbd59"/>
-                    <!-- Candle 2 -->
                     <rect x="96" y="40" width="8" height="30" fill="#ffe6ea"/>
                     <polygon class="flame" id="flame-2" points="100,25 95,38 105,38" fill="#ffbd59"/>
-                    <!-- Candle 3 -->
                     <rect x="117" y="45" width="8" height="25" fill="#ffe6ea"/>
                     <polygon class="flame" id="flame-3" points="121,30 116,43 126,43" fill="#ffbd59"/>
                 </svg>
             </div>
-            <p id="cake-status" style="font-weight: 600; color: var(--gold-primary); min-height: 24px;"></p>
-            <button class="btn-glass" id="btn-p11-next" style="display:none;" onclick="goToPage(12)">The Final Question 💍</button>
+            <p id="cake-status" style="color: var(--gold-primary); font-weight: 600; min-height: 24px;"></p>
+            <button class="btn-glass" id="btn-p12-next" style="display:none;" onclick="goToPage(13)">Wish Upon A Star 🌙</button>
         </div>
     </div>
 
-    <!-- PAGE 12: YES / NO GAME -->
-    <div class="page" id="page-12">
+    <!-- PAGE 13: CHAPTER 12 - WISH UPON A STAR -->
+    <div class="page" id="page-13">
         <div class="glass-card">
-            <h1 class="font-title">One Final Question...</h1>
-            <h2 class="font-cursive" style="font-size: 3.5rem;">Do you love Bhanu?</h2>
-            <div class="choice-box" id="choice-container">
-                <button class="btn-glass" style="width: 280px;" onclick="goToPage(13)">YES ❤️</button>
-                <button class="btn-glass" style="width: 280px;" onclick="goToPage(13)">ABSOLUTELY YES 🥰</button>
-                <button class="btn-glass" style="width: 280px;" onclick="goToPage(13)">EXTREMELY YES 💖</button>
-                <button class="btn-glass" id="btn-no-runaway" onmouseover="evadeNoButton()" onclick="evadeNoButton()">No 😜</button>
+            <p class="font-serif" style="color: var(--gold-primary);">Chapter 12</p>
+            <h1 class="font-title">Wish Upon A Star</h1>
+            <p>Tap anywhere in the sky or letters below to uncover hidden love messages...</p>
+            <div class="letters-grid">
+                <div class="secret-env" onclick="openSecretLetter('I Love You Beyond Words ❤️')">✉️</div>
+                <div class="secret-env" onclick="openSecretLetter('You Are My Peace 🥰')">✉️</div>
+                <div class="secret-env" onclick="openSecretLetter('My Favourite Person Forever ✨')">✉️</div>
+            </div>
+            <p class="font-cursive" id="secret-output" style="font-size: 2.2rem; color: var(--gold-primary); min-height: 50px;"></p>
+            <button class="btn-glass" onclick="goToPage(14)">The Ultimate Question 💍</button>
+        </div>
+    </div>
+
+    <!-- PAGE 14: CHAPTER 13 & 14 - FOREVER & RUNAWAY GAME -->
+    <div class="page" id="page-14">
+        <div class="glass-card">
+            <p class="font-serif" style="color: var(--gold-primary);">Chapter 13 & 14</p>
+            <h1 class="font-title">No Matter Where Life Takes Us...</h1>
+            <h2 class="font-cursive" style="font-size: 3.2rem;">Will you always stay by my side?</h2>
+            <div class="runaway-box">
+                <button class="btn-glass" style="width: 280px;" onclick="goToPage(15)">YES! Forever & Always ❤️</button>
+                <button class="btn-glass" style="width: 280px;" onclick="goToPage(15)">ABSOLUTELY YES 🥰</button>
+                <button class="btn-glass" id="btn-no-runaway" onmouseover="evadeNo()" onclick="evadeNo()">No 😜</button>
             </div>
         </div>
     </div>
 
-    <!-- PAGE 13: NIGHT CONSTELLATION FINALE -->
-    <div class="page" id="page-13">
-        <div class="glass-card" style="background: rgba(13, 2, 26, 0.6);">
-            <h1 class="font-cursive" id="finale-title" style="font-size: 4rem; text-shadow: 0 0 25px var(--rose-500);"></h1>
-            <p id="finale-subtitle" class="font-serif" style="color: var(--gold-primary); font-size: 1.5rem; margin-top: 15px;"></p>
+    <!-- PAGE 15: GRAND FINALE -->
+    <div class="page" id="page-15">
+        <div class="glass-card" style="background: rgba(11, 2, 20, 0.7); border-color: var(--gold-primary);">
+            <h1 class="font-cursive" id="finale-title" style="font-size: 3.8rem; text-shadow: 0 0 30px var(--rose-500);"></h1>
+            <p id="finale-subtitle" class="font-serif" style="color: var(--gold-primary); font-size: 1.4rem; margin-top: 15px;"></p>
+            <p style="margin-top: 20px; font-size: 1rem; opacity: 0.8;">Happy Birthday, Kirti ❤️ Yours Always, Bhanu</p>
         </div>
     </div>
 
@@ -511,7 +627,7 @@
        JAVASCRIPT ARCHITECTURE
        ========================================================================== -->
     <script>
-        /* --- 1. WEB AUDIO SYNTHESIZER ENGINE --- */
+        /* --- 1. PROCEDURAL WEB AUDIO SYNTHESIZER --- */
         const AudioEngine = (() => {
             let ctx = null;
             let isMuted = false;
@@ -538,8 +654,8 @@
                 } catch(e) {}
             }
 
-            function playPop() { playTone(520, 0.08, 'triangle', 0.15); }
-            function playSealBreak() { playTone(180, 0.2, 'sawtooth', 0.2); }
+            function playPop() { playTone(580, 0.08, 'triangle', 0.15); }
+            function playSealBreak() { playTone(160, 0.25, 'sawtooth', 0.2); }
 
             function switchTrack(track) {
                 if (activeTimer) clearInterval(activeTimer);
@@ -552,21 +668,21 @@
                     activeTimer = setInterval(() => {
                         playTone(notes[i % notes.length], 1.2, 'sine', 0.06);
                         i++;
-                    }, 800);
+                    }, 850);
                 } else if (track === 'violin') {
                     const notes = [440, 493.88, 523.25, 587.33];
                     let i = 0;
                     activeTimer = setInterval(() => {
-                        playTone(notes[i % notes.length], 1.5, 'sawtooth', 0.04);
+                        playTone(notes[i % notes.length], 1.6, 'sawtooth', 0.035);
                         i++;
-                    }, 1200);
+                    }, 1300);
                 } else if (track === 'bday') {
                     const notes = [261, 261, 293, 261, 349, 329];
                     let i = 0;
                     activeTimer = setInterval(() => {
                         playTone(notes[i % notes.length], 0.4, 'triangle', 0.1);
                         i++;
-                    }, 400);
+                    }, 420);
                 }
             }
 
@@ -598,26 +714,23 @@
             window.addEventListener('resize', resize);
             resize();
 
-            // Spawn floating petals / sparks
             function spawnParticle(x, y, emoji = null) {
                 particles.push({
                     x: x || Math.random() * pCanvas.width,
                     y: y || -20,
-                    vx: (Math.random() - 0.5) * 1.5,
+                    vx: (Math.random() - 0.5) * 1.6,
                     vy: Math.random() * 2 + 1,
-                    size: Math.random() * 16 + 10,
-                    emoji: emoji || ['🌸', '🌹', '✨', '💖'][Math.floor(Math.random() * 4)],
-                    opacity: 1,
-                    rotation: Math.random() * 360
+                    size: Math.random() * 16 + 12,
+                    emoji: emoji || ['🌸', '🌹', '✨', '💖', '🦋'][Math.floor(Math.random() * 5)],
+                    opacity: 1
                 });
             }
 
-            // Firework bursts
             function spawnFirework(x, y) {
-                const colors = ['#ff4d6d', '#ffd166', '#06d6a0', '#118ab2', '#ff758f'];
-                for (let i = 0; i < 40; i++) {
-                    const angle = (Math.PI * 2 / 40) * i;
-                    const speed = Math.random() * 5 + 2;
+                const colors = ['#ff4d6d', '#ffd166', '#06d6a0', '#118ab2', '#ff758f', '#d4af37'];
+                for (let i = 0; i < 45; i++) {
+                    const angle = (Math.PI * 2 / 45) * i;
+                    const speed = Math.random() * 5.5 + 2;
                     fireworks.push({
                         x, y,
                         vx: Math.cos(angle) * speed,
@@ -633,7 +746,6 @@
                 pCtx.clearRect(0, 0, pCanvas.width, pCanvas.height);
                 fCtx.clearRect(0, 0, fCanvas.width, fCanvas.height);
 
-                // Render floating particles
                 particles.forEach((p, idx) => {
                     p.x += p.vx; p.y += p.vy; p.opacity -= 0.003;
                     pCtx.save();
@@ -644,9 +756,8 @@
                     if (p.opacity <= 0 || p.y > pCanvas.height) particles.splice(idx, 1);
                 });
 
-                // Render fireworks
                 fireworks.forEach((f, idx) => {
-                    f.x += f.vx; f.y += f.vy; f.vy += 0.05; f.alpha -= 0.015;
+                    f.x += f.vx; f.y += f.vy; f.vy += 0.06; f.alpha -= 0.016;
                     fCtx.save();
                     fCtx.globalAlpha = Math.max(0, f.alpha);
                     fCtx.fillStyle = f.color;
@@ -657,20 +768,19 @@
                     if (f.alpha <= 0) fireworks.splice(idx, 1);
                 });
 
-                if (Math.random() < 0.05) spawnParticle();
+                if (Math.random() < 0.06) spawnParticle();
                 requestAnimationFrame(render);
             }
 
-            // Mouse trail effect
             window.addEventListener('mousemove', (e) => {
-                if (Math.random() < 0.2) spawnParticle(e.clientX, e.clientY, '✨');
+                if (Math.random() < 0.25) spawnParticle(e.clientX, e.clientY, '✨');
             });
 
             render();
             return { spawnParticle, spawnFirework };
         })();
 
-        /* --- 3. PAGE FLOW & CONTROLLER --- */
+        /* --- 3. PAGE FLOW & INTERACTIVE LOGIC --- */
         let currentPage = 1;
 
         function goToPage(page) {
@@ -679,14 +789,18 @@
             const nextEl = document.getElementById(`page-${currentPage}`);
             nextEl.classList.add('active');
 
-            // Trigger specific page animations
-            if (page === 2) triggerTypewriter("It all started with a simple hello... little did I know you would become my entire world.");
+            // Dark Mode toggle for emotional scene
+            if (page === 7) document.body.classList.add('dark-emotional-mode');
+            else document.body.classList.remove('dark-emotional-mode');
+
+            // Trigger chapter routines
+            if (page === 2) triggerTypewriter("Once upon a time, a beautiful soul named Kirti stepped into my life... and turned every ordinary moment into pure magic.");
             if (page === 3) initGardenBed();
-            if (page === 4) triggerChatFlood();
-            if (page === 5) triggerTedTalk();
-            if (page === 6) triggerScannerBar();
-            if (page === 9) animateTeddy();
-            if (page === 13) triggerConstellationFinale();
+            if (page === 4) animateTeddy();
+            if (page === 5) triggerScannerBar();
+            if (page === 6) triggerTedTalk();
+            if (page === 7) triggerThatLook();
+            if (page === 15) triggerConstellationFinale();
         }
 
         /* CH 1: ENVELOPE OPEN */
@@ -696,12 +810,12 @@
             document.getElementById('env-flap').style.transform = 'rotateX(180deg)';
             document.getElementById('env-letter').style.transform = 'translateY(-110px)';
             for (let i = 0; i < 20; i++) CanvasEngine.spawnParticle(window.innerWidth / 2, window.innerHeight / 2);
-            setTimeout(() => goToPage(2), 1800);
+            setTimeout(() => goToPage(2), 1600);
         }
 
         /* CH 2: TYPEWRITER */
         function triggerTypewriter(text) {
-            const el = document.getElementById('typewriter-p2');
+            const el = document.getElementById('typewriter-ch1');
             el.innerHTML = '';
             let i = 0;
             const timer = setInterval(() => {
@@ -710,14 +824,14 @@
                     if (i % 3 === 0) AudioEngine.playTone(600, 0.03, 'sine', 0.02);
                     i++;
                 } else clearInterval(timer);
-            }, 45);
+            }, 40);
         }
 
         /* CH 3: GARDEN BED */
         function initGardenBed() {
             const container = document.getElementById('garden-bed');
             if (container.children.length > 0) return;
-            const flowers = ['🌹', '🌷', '🌸', '🌺', '🌼', '🌻', '🪻', '💐'];
+            const flowers = ['🌹', '🌷', '🌸', '🌺', '🌼', '🌻', '💜', '💐', '🌳', '🐝', '🦋'];
             flowers.forEach((f) => {
                 const span = document.createElement('span');
                 span.className = 'flower-node';
@@ -730,78 +844,87 @@
             });
         }
 
-        /* CH 4: SHY GIRL CHAT FLOOD */
-        function triggerChatFlood() {
-            const container = document.getElementById('chat-stream-box');
-            container.innerHTML = '';
-            const messages = ["So...", "Actually...", "Listen...", "One more thing...", "Wait!", "Bhanuuu! 😂", "Also..."];
-            let count = 0;
+        /* CH 4: ANIMATED TEDDY */
+        function animateTeddy() {
+            const teddy = document.getElementById('teddy-actor');
+            const dialogue = document.getElementById('teddy-dialogue');
+            let pos = -80;
             const timer = setInterval(() => {
-                if (count >= 14) {
-                    clearInterval(timer);
-                    document.getElementById('btn-p4-next').style.display = 'inline-flex';
-                    return;
+                pos += 4;
+                teddy.style.left = pos + 'px';
+                if (pos === 80) { // Trip
+                    teddy.innerText = '💥🧸';
+                    dialogue.innerText = "Oops! Stumbled and dropped flowers...";
                 }
-                AudioEngine.playPop();
-                const bubble = document.createElement('div');
-                bubble.className = 'chat-bubble';
-                bubble.innerText = messages[Math.floor(Math.random() * messages.length)] + " 💬";
-                bubble.style.left = Math.random() * 65 + 5 + '%';
-                bubble.style.top = Math.random() * 65 + 5 + '%';
-                container.appendChild(bubble);
-                count++;
+                if (pos === 120) { // Recover
+                    teddy.innerText = '🧸💐';
+                    dialogue.innerText = "Picked them up! Here is a bouquet for you, Kirti!";
+                }
+                if (pos >= 220) clearInterval(timer);
+            }, 50);
+        }
+
+        /* CH 5: STUBBORNNESS SCANNER */
+        function triggerScannerBar() {
+            const fill = document.getElementById('scan-fill');
+            fill.style.width = '0%';
+            setTimeout(() => {
+                fill.style.width = '99.999999%';
+                setTimeout(() => {
+                    AudioEngine.playPop();
+                    document.getElementById('scan-result').style.opacity = '1';
+                    document.getElementById('btn-p5-next').style.opacity = '1';
+                }, 3600);
             }, 300);
         }
 
-        /* CH 5: TED TALK CURTAINS */
+        /* CH 6: TED TALK */
         function triggerTedTalk() {
             setTimeout(() => {
                 document.getElementById('curtain-l').style.transform = 'scaleX(0)';
                 document.getElementById('curtain-r').style.transform = 'scaleX(0)';
                 document.getElementById('spotlight').style.opacity = '1';
-                AudioEngine.playTone(300, 0.6, 'triangle', 0.1);
-            }, 600);
+                AudioEngine.playTone(320, 0.5, 'triangle', 0.1);
+            }, 500);
         }
 
-        /* CH 6: SCANNER BAR */
-        function triggerScannerBar() {
-            const fill = document.getElementById('scan-fill');
-            fill.style.width = '0%';
-            setTimeout(() => {
-                fill.style.width = '99.999%';
-                setTimeout(() => {
-                    AudioEngine.playPop();
-                    document.getElementById('scan-result').style.opacity = '1';
-                    document.getElementById('btn-p6-next').style.opacity = '1';
-                }, 4200);
-            }, 400);
+        /* CH 7: THAT LOOK */
+        function triggerThatLook() {
+            const t1 = document.getElementById('look-text-1');
+            const t2 = document.getElementById('look-text-2');
+            t1.innerText = ''; t2.innerText = '';
+            setTimeout(() => { t1.innerText = "Then you looked at me..."; }, 600);
+            setTimeout(() => { t2.innerText = "And my heart quietly whispered... She's the one."; }, 2200);
         }
 
-        /* CH 8: SURPRISE BOXES */
-        function revealSurprise(btn, text) {
+        /* CH 8: ARGUMENT SIMULATOR */
+        function selectArgumentAnswer(choice) {
             AudioEngine.playPop();
-            btn.innerText = '✨';
-            document.getElementById('surprise-text-output').innerText = text;
+            const res = document.getElementById('argument-result');
+            if (choice === 'bhanu') {
+                res.innerHTML = `<p style="color:#ff758f;">❌ Wrong Answer! Try Again 😂</p>`;
+            } else {
+                res.innerHTML = `<p style="color:#06d6a0;">✅ Correct! Kirti is always right! 🏳️ I surrender!</p>`;
+                document.getElementById('btn-p8-next').style.display = 'inline-flex';
+            }
         }
 
-        /* CH 9: ANIMATED TEDDY */
-        function animateTeddy() {
-            const teddy = document.getElementById('teddy-actor');
-            const speech = document.getElementById('teddy-speech');
-            let pos = -60;
-            const timer = setInterval(() => {
-                pos += 3;
-                teddy.style.left = pos + 'px';
-                if (pos === 90) { // Trip & Fall
-                    teddy.innerText = '💥🧸';
-                    speech.innerText = "Oops! Stumbled... but got up!";
-                }
-                if (pos === 120) { // Fix flowers
-                    teddy.innerText = '🧸💐';
-                    speech.innerText = "Here are your beautiful flowers, Kirti!";
-                }
-                if (pos >= 200) clearInterval(timer);
-            }, 50);
+        /* CH 10: MINI GAME CATCH HEART */
+        let gameScore = 0;
+        function catchHeart() {
+            AudioEngine.playPop();
+            gameScore++;
+            document.getElementById('game-score').innerText = gameScore;
+            const target = document.getElementById('target-heart');
+            target.style.left = Math.random() * 75 + '%';
+            target.style.top = Math.random() * 65 + '%';
+            
+            const msgs = ["You unlocked my smile! 😊", "You unlocked my happiness! ✨", "You unlocked my heart! 💖", "You are amazing! 🥰", "Master Heart Catcher! ❤️"];
+            document.getElementById('game-message').innerText = msgs[(gameScore - 1) % msgs.length];
+
+            if (gameScore >= 5) {
+                document.getElementById('btn-p11-next').style.display = 'inline-flex';
+            }
         }
 
         /* CH 11: CAKE CANDLES */
@@ -810,15 +933,21 @@
             document.querySelectorAll('.flame').forEach(f => f.style.display = 'none');
             document.getElementById('cake-status').innerText = '✨ Wish Made! Candles Blown Out! ✨';
             CanvasEngine.spawnFirework(window.innerWidth / 2, window.innerHeight / 2);
-            document.getElementById('btn-p11-next').style.display = 'inline-flex';
+            document.getElementById('btn-p12-next').style.display = 'inline-flex';
         }
 
-        /* CH 12: EVASIVE NO BUTTON */
+        /* CH 12: SECRET LETTERS */
+        function openSecretLetter(msg) {
+            AudioEngine.playPop();
+            document.getElementById('secret-output').innerText = msg;
+        }
+
+        /* RUNAWAY NO BUTTON */
         let noScale = 1;
-        function evadeNoButton() {
+        function evadeNo() {
             const btn = document.getElementById('btn-no-runaway');
             const x = (Math.random() - 0.5) * 220;
-            const y = (Math.random() - 0.5) * 160;
+            const y = (Math.random() - 0.5) * 150;
             noScale -= 0.15;
             if (noScale <= 0.1) {
                 btn.style.display = 'none';
@@ -829,7 +958,7 @@
             }
         }
 
-        /* CH 13: CONSTELLATION FINALE */
+        /* GRAND FINALE */
         function triggerConstellationFinale() {
             const canvas = document.getElementById('canvas-night');
             const ctx = canvas.getContext('2d');
@@ -837,7 +966,7 @@
             canvas.height = window.innerHeight;
 
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            for (let i = 0; i < 150; i++) {
+            for (let i = 0; i < 180; i++) {
                 ctx.fillStyle = `rgba(255, 255, 255, ${Math.random()})`;
                 ctx.beginPath();
                 ctx.arc(Math.random() * canvas.width, Math.random() * canvas.height, Math.random() * 2, 0, Math.PI * 2);
@@ -847,24 +976,24 @@
             setTimeout(() => {
                 document.getElementById('finale-title').innerHTML = "❤️ KIRTI ❤️<br>BHANU";
                 document.getElementById('finale-subtitle').innerText = "✨ Forever Starts Here ✨";
-                setInterval(() => CanvasEngine.spawnFirework(Math.random() * canvas.width, Math.random() * canvas.height), 800);
-            }, 1200);
+                setInterval(() => CanvasEngine.spawnFirework(Math.random() * canvas.width, Math.random() * canvas.height), 700);
+            }, 1000);
         }
 
-        /* FLOATING LOVE NOTE TOAST GENERATOR */
-        function spawnLoveNote() {
+        /* FLOATING TOAST */
+        function spawnLoveToast() {
             AudioEngine.playPop();
-            const notes = ["I miss you ❤️", "My favourite person ✨", "My peace 🥰", "My smile 😊", "My forever 💖"];
-            const note = document.createElement('div');
-            note.className = 'floating-note-toast';
-            note.innerText = notes[Math.floor(Math.random() * notes.length)];
-            note.style.left = (Math.random() * 50 + 25) + 'vw';
-            note.style.top = (Math.random() * 40 + 30) + 'vh';
-            document.body.appendChild(note);
-            setTimeout(() => note.remove(), 4500);
+            const notes = ["I love you ❤️", "My favourite person ✨", "My peace 🥰", "My smile 😊", "Forever Yours 💖"];
+            const toast = document.createElement('div');
+            toast.className = 'floating-toast';
+            toast.innerText = notes[Math.floor(Math.random() * notes.length)];
+            toast.style.left = (Math.random() * 50 + 25) + 'vw';
+            toast.style.top = (Math.random() * 40 + 30) + 'vh';
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 4500);
         }
 
-        // Initialize audio engine on first click anywhere
+        // Initialize audio context on first click
         document.body.addEventListener('click', () => AudioEngine.init(), { once: true });
     </script>
 </body>
